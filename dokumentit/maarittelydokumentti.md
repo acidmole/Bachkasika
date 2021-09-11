@@ -15,8 +15,8 @@ Markovin ketjua varten lähtöaineisto tallennetaan trie-tietorakenteeseen, jost
 Trie-rakenne joudutaan suunnitelemaan ja toteuttamaan kokonaan itse. Lista- ja mahdollisissa Map-rakenteissa käytetään Javan omia standardikirjastoja.
 
 ## Aika- ja tilavaativuudet
-Aikavaativuudessa pyritään O(n)-vaativuuteen. Syötteitä voi olla paljonkin, mutta kuitenkin selvästi alle 10⁶, mikä on riittävä O(n):lle (Laaksonen 2020). Tilavaativuus on O(n).
+Aikavaativuudessa pyritään O(n)-vaativuuteen. Syötteitä voi olla paljonkin, mutta kuitenkin selvästi alle 10⁶, mikä on riittävä O(n):lle (Laaksonen 2020, s.13). Tilavaativuus on O(n).
 
 ## Lähteet: 
-Laaksonen, Antti: Tietorakenteet ja algoritmit (2020)
-Markov chain, Wikipedia, luettu 11.9, saatavilla: https://en.wikipedia.org/wiki/Markov_chain
+* Laaksonen, Antti: Tietorakenteet ja algoritmit (2020)
+* Markov chain, Wikipedia, luettu 11.9, saatavilla: https://en.wikipedia.org/wiki/Markov_chain
