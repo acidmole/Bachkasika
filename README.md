@@ -1,2 +1,2 @@
 # Bachkasika
-Bach organ music produced with Markov chain
+Bachin urkumusiikkia tuotettuna Markovin ketjulla
