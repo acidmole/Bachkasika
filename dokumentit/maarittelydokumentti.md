@@ -8,3 +8,5 @@ Ohjelma käyttää hyväkseen Bachin [MIDI](https://en.wikipedia.org/wiki/MIDI)-
 Aika- ja tilavaativuudeltaan pyritään O(n)-vaativuuteen.
 
 Ohjelman kielenä on Java. Vertaisarviointia voidaan myös tehdä Python-töille. Kaikki koodin sisä- ja ulkopuolinen dokumentointi tehdään suomen kielellä.
+
+Lähteet: Markov chain, Wikipedia, luettu 11.9, saatavilla: https://en.wikipedia.org/wiki/Markov_chain
