@@ -12,7 +12,10 @@ import lombok.Data;
 /**
  * Luokka, joka vastaa yksittäisen nuotin informaatiosta
  * 
- * 
+ * tick on aika-arvo nuotin soitolle
+ * key on äänen korkeus
+ * duration on kesto
+ * delay on viive ennen seuraavan nuotin soittamista
  * 
  */
 @AllArgsConstructor @NoArgsConstructor @Data
