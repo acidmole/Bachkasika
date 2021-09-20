@@ -13,7 +13,7 @@ Koodin puhtautta voi tarkistella käskyllä
 ```
 mvn jxr:jxr checkstyle:checkstyle
 ```
-Raportti tästä löytyy osoitteesta _target/site/checkstyle.html_
+Raportti tästä löytyy hakemistosta _target/site/checkstyle.html_
 
 
 ## Dokumentit:
