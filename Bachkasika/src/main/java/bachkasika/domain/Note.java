@@ -32,17 +32,15 @@ public class Note {
      * @param anotherNote vertailtava nuotti
      * @return palauttaa 0, jos nuotti on sama, muuten -1
      */
-    public int equals(Note anotherNote) {
+    public boolean equals(Note anotherNote) {
         if (this.key == anotherNote.getKey()) {
             if (this.duration == anotherNote.getDuration()) {
                 if (this.delay == anotherNote.getDelay()) {
-                    return 0;
+                    return true;
                 }
             }
         }
-        return -1;
+        return false;
     }
-    
-    
     
 }
