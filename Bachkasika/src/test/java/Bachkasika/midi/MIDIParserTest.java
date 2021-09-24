@@ -39,7 +39,7 @@ public class MIDIParserTest {
     
     @Test
     public void parserParsesCorrectly() throws Exception {
-        ArrayList<Note> testNotes = testParser.parse();
+        ArrayList<Note> testNotes = testParser.parse(0);
         assertEquals(testNotes.get(0).getKey(), 60);
         assertEquals(testNotes.get(1).getTick(), 1920);
         assertEquals(testNotes.get(2).getDuration(), 1920);
