@@ -63,7 +63,7 @@ public class MIDIParser {
      * Kaikki nuotit tallennetaan jatkossa kanavalle 0 ja velocity ON = 127
      * sekä velocity OFF = 64.
      * 
-     * @param kuinka monta sävelaskelta transponoidaan. Max +-12.
+     * @param transpose kuinka monta sävelaskelta transponoidaan
      * @return ArrayList<Note> kaikki nuotit mallinnettuna pituuden sekä 
      * seuraavan nuotin soittoajankohdan mukaan
      * @throws Exception kaikissa parseroinnin ja MIDI-tiedoston virhetilanteissa
@@ -77,8 +77,6 @@ public class MIDIParser {
         int trackNumber = 0;
         for (Track track :  sequence.getTracks()) {
             trackNumber++;
-            System.out.println("Track " + trackNumber + ": size = " + track.size());
-            System.out.println();
             for (int i = 0; i < track.size(); i++) { 
                 MidiEvent event = track.get(i);
                 long tick = event.getTick();
@@ -105,12 +103,8 @@ public class MIDIParser {
                                 break;
                             }
                         }
-                    } else {
-                        System.out.println("Command:" + sm.getCommand());
-                    }
-                }
+                    }                 }
             }
-
             System.out.println();
         }
         return this.parsedMIDI;

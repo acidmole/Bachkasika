@@ -15,6 +15,13 @@ public class NoteNode extends Note {
     
     private ArrayList<NoteNode> children;
     
+    /**
+     * Luo uuden noden Trie-rakenteeseen. Jokaiseen nodeen tallennetaan myös
+     * viittaukset lapsinodeihinsa.
+     * 
+     * @param n Note-olio eli nuotin arvot
+     * @see Note
+     */
     public NoteNode(Note n) {
 
         super(n.getTick(), n.getKey(), n.getDuration(), n.getDelay());
@@ -26,6 +33,10 @@ public class NoteNode extends Note {
         return new Note(this.getTick(), this.getKey(), this.getDuration(), this.getDelay());
     }
    
+    /**
+     * Lisää viittauksen lapseen.
+     * @param nn lapsinode
+     */
     public void insertChild(NoteNode nn) {
         if (nn != null) {
             this.children.add(nn);
