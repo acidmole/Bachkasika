@@ -43,4 +43,10 @@ public class Note {
         return false;
     }
     
+    @Override
+    public String toString() {
+        return "Tick: "+ this.tick + ", key: " + this.key + ", duration: " 
+                + this.duration + ", delay " + this.delay;
+    }
+    
 }

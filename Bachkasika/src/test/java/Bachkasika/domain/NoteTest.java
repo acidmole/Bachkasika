@@ -39,10 +39,10 @@ public class NoteTest {
     
     @Test
     public void noteEqualsWorksRight() {
-        assertEquals(this.note.equals(this.note), 0);
-        assertEquals(this.note.equals(note2), -1);
-        assertEquals(this.note.equals(note3), -1);
-        assertEquals(this.note.equals(note4), -1);
+        assertEquals(true, this.note.equals(this.note));
+        assertEquals(false, this.note.equals(note2));
+        assertEquals(false, this.note.equals(note3));
+        assertEquals(false, this.note.equals(note4));
     
     }
 

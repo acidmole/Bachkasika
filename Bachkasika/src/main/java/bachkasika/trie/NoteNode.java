@@ -36,9 +36,5 @@ public class NoteNode extends Note {
         return this.children;
     }
     
-    public boolean equals(NoteNode nn) {
-        return this.equals(nn);
-    }
-    
     
 }

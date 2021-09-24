@@ -6,6 +6,7 @@ package bachkasika.trie;
 
 import bachkasika.domain.Note;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * 
@@ -20,26 +21,39 @@ public class Trie {
 
     public Trie() {
         this.nodesByKey = new ArrayList();
+        for (int i = 0; i < 128; i++) {
+            this.nodesByKey.add(i, new ArrayList<NoteNode>());
+        }
         this.previousNode = null;
     }
     
     public void addNote(Note n) {
         NoteNode newNode = new NoteNode(n);
-        this.previousNode.insertChild(newNode);
-        if (!this.isNoteInNodeList(n)) {
-            ArrayList<NoteNode> nodeList = this.nodesByKey.get(n.getKey());
+        if (this.previousNode != null) {
+            this.previousNode.insertChild(newNode);
+        }
+        if (!this.isNoteInNodeList(newNode)) {
+            ArrayList<NoteNode> nodeList = this.nodesByKey.remove(newNode.getKey());
             nodeList.add(newNode);
-            this.nodesByKey.add(n.getKey(), nodeList);
+            this.nodesByKey.add(newNode.getKey(), nodeList);
         }
         this.previousNode = newNode;
     }
     
-    public boolean isNoteInNodeList(Note n) {
-        for (NoteNode nn : this.nodesByKey.get(n.getKey())) {
+    public boolean isNoteInNodeList(NoteNode n) {
+        for (Iterator<NoteNode> it = this.nodesByKey.get(n.getKey()).iterator(); it.hasNext();) {
+            NoteNode nn = it.next();
+            System.out.println(nn + " vs. " + n);
             if (nn.equals(n)) {
+                System.out.println("true");
                 return true;
             }
         }
+        System.out.println("false");
         return false;
+    }
+    
+    public ArrayList<NoteNode> getNodesByKey(int key) {
+        return this.nodesByKey.get(key);
     }
 }
