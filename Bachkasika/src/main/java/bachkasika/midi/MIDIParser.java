@@ -63,12 +63,14 @@ public class MIDIParser {
      * Kaikki nuotit tallennetaan jatkossa kanavalle 0 ja velocity ON = 127
      * sekä velocity OFF = 64.
      * 
+     * @param kuinka monta sävelaskelta transponoidaan. Max +-12.
      * @return ArrayList<Note> kaikki nuotit mallinnettuna pituuden sekä 
      * seuraavan nuotin soittoajankohdan mukaan
      * @throws Exception kaikissa parseroinnin ja MIDI-tiedoston virhetilanteissa
      */
-    public ArrayList<Note> parse() throws Exception {
+    public ArrayList<Note> parse(int transpose) throws Exception {
         
+        transpose = transpose % 12;
         ArrayDeque<Note> noteDeque = new ArrayDeque<>();
         Sequence sequence = MidiSystem.getSequence(this.midiFile);
 
@@ -86,7 +88,7 @@ public class MIDIParser {
 
                     if (sm.getCommand() == NOTE_ON) {
                         int key = sm.getData1();
-                        Note newNote = new Note(tick, key, -1, 0);
+                        Note newNote = new Note(tick, key+transpose, -1, 0);
                         if (!noteDeque.isEmpty()) {
                             noteDeque.peekLast().setDelay(tick - noteDeque.peekLast().getTick());
                         }

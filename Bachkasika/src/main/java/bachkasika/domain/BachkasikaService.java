@@ -21,10 +21,11 @@ public class BachkasikaService {
         try {
             BachkasikaFileService bsFileService = new BachkasikaFileService("bwv539.mid");
             MIDIParser parser = new MIDIParser(bsFileService.getMidiFile());
-            parser.parse();
+            parser.parse(0);
             ArrayList<Note> sheet = parser.getMIDINotes();
             bsFileService.addNewFile("bwv588.mid");
             parser.setMidiFile(bsFileService.getMidiFile());
+            parser.parse(0);
             ArrayList<Note> sheet2 = parser.getMIDINotes();
             Trie trie = new Trie();
             long start = System.currentTimeMillis();
