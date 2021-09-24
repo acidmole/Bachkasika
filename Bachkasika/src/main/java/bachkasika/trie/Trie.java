@@ -43,13 +43,10 @@ public class Trie {
     public boolean isNoteInNodeList(NoteNode n) {
         for (Iterator<NoteNode> it = this.nodesByKey.get(n.getKey()).iterator(); it.hasNext();) {
             NoteNode nn = it.next();
-            System.out.println(nn + " vs. " + n);
             if (nn.equals(n)) {
-                System.out.println("true");
                 return true;
             }
         }
-        System.out.println("false");
         return false;
     }
     

@@ -26,4 +26,9 @@ public class BachkasikaFileService {
     public BachkasikaFileService(String fileName) {
         this.midiFile = new File(fileName);        
     }
+    
+    public void addNewFile(String name) {
+        this.midiFile = new File(name);
+    }
+    
 }

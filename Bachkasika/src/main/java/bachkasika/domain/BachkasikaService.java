@@ -7,6 +7,8 @@ package bachkasika.domain;
 
 import bachkasika.io.BachkasikaFileService;
 import bachkasika.midi.MIDIParser;
+import bachkasika.trie.NoteNode;
+import bachkasika.trie.Trie;
 import java.util.ArrayList;
 
 /**
@@ -21,9 +23,20 @@ public class BachkasikaService {
             MIDIParser parser = new MIDIParser(bsFileService.getMidiFile());
             parser.parse();
             ArrayList<Note> sheet = parser.getMIDINotes();
-            for (int i = 0; i < 20; i++) {
-                System.out.println(sheet.get(i));
+            bsFileService.addNewFile("bwv588.mid");
+            parser.setMidiFile(bsFileService.getMidiFile());
+            ArrayList<Note> sheet2 = parser.getMIDINotes();
+            Trie trie = new Trie();
+            long start = System.currentTimeMillis();
+            for (Note n : sheet) {
+                trie.addNote(n);
             }
+            for (Note n : sheet2) {
+                trie.addNote(n);
+            }
+            long stop = System.currentTimeMillis();
+            System.out.println("Notes:" + (sheet.size() + sheet2.size()));
+            System.out.println("Parsing time: " + (stop - start) + " milliseconds");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Virhe tapahtui Midin käsittelyssä.");

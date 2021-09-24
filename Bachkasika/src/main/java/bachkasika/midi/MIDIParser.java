@@ -60,7 +60,7 @@ public class MIDIParser {
      * vielä toisen soidessa) tallennetaan jokainen soitettu nuotti jonoon
      * odottamaan, että sen soitto päättyy.
      * 
-     * Kaikki nuotit tallenetaan jatkossa kanavalle 0 ja velocity ON = 127
+     * Kaikki nuotit tallennetaan jatkossa kanavalle 0 ja velocity ON = 127
      * sekä velocity OFF = 64.
      * 
      * @return ArrayList<Note> kaikki nuotit mallinnettuna pituuden sekä 
@@ -112,6 +112,10 @@ public class MIDIParser {
             System.out.println();
         }
         return this.parsedMIDI;
+    }
+    
+    public void setMidiFile(File file) {
+        this.midiFile = file;
     }
     
     
