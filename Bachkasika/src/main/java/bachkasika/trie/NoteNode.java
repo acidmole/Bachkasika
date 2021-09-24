@@ -18,19 +18,22 @@ public class NoteNode extends Note {
     public NoteNode(Note n) {
 
         super(n.getTick(), n.getKey(), n.getDuration(), n.getDelay());
+        this.children = new ArrayList<NoteNode>();
         
     }
     
     public Note getNote() {
-       return new Note(this.getTick(), this.getKey(), this.getDuration(), this.getDelay());
+        return new Note(this.getTick(), this.getKey(), this.getDuration(), this.getDelay());
     }
    
     public void insertChild(NoteNode nn) {
-       this.children.add(nn);
+        if (nn != null) {
+            this.children.add(nn);
+        }
     }
    
     public ArrayList<NoteNode> getChildren() {
-       return this.children;
+        return this.children;
     }
     
     public boolean equals(NoteNode nn) {

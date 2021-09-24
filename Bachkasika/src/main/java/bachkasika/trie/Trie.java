@@ -16,17 +16,22 @@ import java.util.ArrayList;
 public class Trie {
     
     private ArrayList<ArrayList<NoteNode>> nodesByKey;
-    
+    private NoteNode previousNode;
+
     public Trie() {
         this.nodesByKey = new ArrayList();
+        this.previousNode = null;
     }
     
     public void addNote(Note n) {
+        NoteNode newNode = new NoteNode(n);
+        this.previousNode.insertChild(newNode);
         if (!this.isNoteInNodeList(n)) {
             ArrayList<NoteNode> nodeList = this.nodesByKey.get(n.getKey());
-            nodeList.add(new NoteNode(n));
+            nodeList.add(newNode);
             this.nodesByKey.add(n.getKey(), nodeList);
         }
+        this.previousNode = newNode;
     }
     
     public boolean isNoteInNodeList(Note n) {
