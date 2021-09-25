@@ -21,6 +21,7 @@ public class NoteNodeTest {
     
     NoteNode nn1;
     NoteNode nn2;
+    NoteNode nn3;
     
     public NoteNodeTest() {
     }
@@ -29,6 +30,7 @@ public class NoteNodeTest {
     public void setUp() {
         nn1 = new NoteNode(new Note(0, 60, 100, 100));
         nn2 = new NoteNode(new Note(0, 60, 100, 100));
+        nn3 = new NoteNode(new Note(0, 61, 100, 100));
     }
     
     
@@ -36,6 +38,17 @@ public class NoteNodeTest {
     public void noteNodeEqualsWorksRight() {
         assertEquals(true, nn1.equals(nn1));
         assertEquals(true, nn1.equals(nn2));
+    }
+    
+    @Test
+    public void insertingChildrenWorksRight() {
+        nn1.insertChild(nn1);
+        nn1.insertChild(nn2);
+        nn1.insertChild(nn3);
+        nn1.insertChild(nn1);
+        assertEquals(4, nn1.getChildren().size());
+        
+        
     }
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:

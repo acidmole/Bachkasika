@@ -7,6 +7,7 @@ package bachkasika.domain;
 
 import bachkasika.io.BachkasikaFileService;
 import bachkasika.midi.MIDIParser;
+import bachkasika.trie.MarkovChain;
 import bachkasika.trie.NoteNode;
 import bachkasika.trie.Trie;
 import java.util.ArrayList;
@@ -37,7 +38,12 @@ public class BachkasikaService {
             }
             long stop = System.currentTimeMillis();
             System.out.println("Notes:" + (sheet.size() + sheet2.size()));
-            System.out.println("Parsing time: " + (stop - start) + " milliseconds");
+            System.out.println("Parsing time: " + (stop - start)/1000.0 + " seconds");
+            MarkovChain mc = new MarkovChain(trie);
+            ArrayList<NoteNode> markovinlista = mc.formChain(100, false);
+            for (int i=0; i < markovinlista.size(); i++) {
+                System.out.println(markovinlista.get(i));
+            }
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Virhe tapahtui Midin käsittelyssä.");

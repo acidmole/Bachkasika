@@ -33,20 +33,19 @@ public class TrieTest {
     public void setUp() {
         trie = new Trie();
         testNotes = new ArrayList<>();
-        for (int i=60; i<63; i++) {
+        for (int i=0; i<127; i++) {
             testNotes.add(new Note(0, i, 100, 100));
         }
     }
  
     @Test
-    public void noteAddingWorksRight() {
+    public void addingNotesSeparatesThemCorrectly() {
         for (Note n : testNotes) {
             trie.addNote(n);
         }
-        assertEquals(1, this.trie.getNodesByKey(60).size());
-        assertEquals(1, this.trie.getNodesByKey(61).size());
-        assertEquals(1, this.trie.getNodesByKey(62).size());
-        
+        for (int i = 0; i<127; i++) {
+            assertEquals(1, this.trie.getNodesByKey(i).size());
+        }
     }
     
     @Test
@@ -56,6 +55,26 @@ public class TrieTest {
         trie.addNote(n);
         trie.addNote(n);
         assertEquals(1, this.trie.getNodesByKey(60).size());
+        
+    }
+    
+    @Test
+    public void childrenAreLinkedCorrectly() {
+        NoteNode nn1 = new NoteNode(testNotes.get(60));
+        NoteNode nn2 = new NoteNode(testNotes.get(60));
+        NoteNode nn3 = new NoteNode(testNotes.get(61));
+        
+        trie.addNote(nn1);
+        trie.addNote(nn2);
+        trie.addNote(nn1);
+        trie.addNote(nn1);
+        trie.addNote(nn3);
+        trie.addNote(nn1);
+        
+        assertEquals(1, nn3.getChildren().size());
+        assertEquals(1, nn2.getChildren().size());
+        assertEquals(3, nn2.getChildren().size());
+        
         
     }
 }

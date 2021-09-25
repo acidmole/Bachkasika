@@ -9,20 +9,22 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * 
  * @author hede
  * 
+ * Luokka on verkko, joka tallentaa sävelkorkeudeltaan erilaisia nuotteja.
+ * Sävelkorkeudeltaan samanlaiset nuotit voivat olla erilaisia kestoltaan ja
+ * päällekkäisyydeltään, joten saman korkeuden sisältävät nuotit ovat
+ * talletettu samaan listaan. Tallennettaessa vertaillaan,  jos täsmälleen 
+ * samanlainen nuotti on jo rakenteessa. 
  * 
+ * Jokaisella verkon erilaisella nuotilla on talletettu myös verkon
+ * naapurisolmut, joihin voidaan siirtyä.
  */
 public class Trie {
     
     private ArrayList<ArrayList<NoteNode>> nodesByKey;
     private NoteNode previousNode;
 
-    /**
-     * Jokaiselle sävelkorkeudelle luodaan ArrayList, jossa on eripituisia
-     * ja pitkälle soivia nuotteja.
-     */
     public Trie() {
         this.nodesByKey = new ArrayList();
         for (int i = 0; i < 128; i++) {
@@ -33,18 +35,24 @@ public class Trie {
     
     /**
      * Lisää sävelkorkeuden omaan listaansa, jos täsmälleen samanlaista ei 
-     * jo ole olemassa.
+     * jo ole olemassa. Lisätään samalla viite edellisestä NoteNode-oliosta
+     * joko uuteen olioon tai jo olemassa olevaan.
      * @param n lisättävä nuotti
      */
     public void addNote(Note n) {
         NoteNode newNode = new NoteNode(n);
-        if (this.previousNode != null) {
-            this.previousNode.insertChild(newNode);
-        }
-        if (!this.isNoteInNodeList(newNode)) {
+        NoteNode duplicateNode = this.isNoteInNodeList(newNode);
+        if (duplicateNode != null) {
             ArrayList<NoteNode> nodeList = this.nodesByKey.remove(newNode.getKey());
             nodeList.add(newNode);
             this.nodesByKey.add(newNode.getKey(), nodeList);
+            if (this.previousNode != null) {
+                this.previousNode.insertChild(newNode);
+            }
+        } else {
+            if(previousNode != null) {
+                previousNode.insertChild(duplicateNode);
+            }
         }
         this.previousNode = newNode;
     }
@@ -55,14 +63,14 @@ public class Trie {
      * @param n nuotti jota tarkastetaan
      * @return true, jos nuotti löytyi. Muuten false.
      */
-    public boolean isNoteInNodeList(NoteNode n) {
+    public NoteNode isNoteInNodeList(NoteNode n) {
         for (Iterator<NoteNode> it = this.nodesByKey.get(n.getKey()).iterator(); it.hasNext();) {
             NoteNode nn = it.next();
             if (nn.equals(n)) {
-                return true;
+                return nn;
             }
         }
-        return false;
+        return null;
     }
     
     /**
