@@ -9,6 +9,7 @@ import bachkasika.domain.Note;
 import java.io.File;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import javax.sound.midi.MidiEvent;
 import javax.sound.midi.MidiMessage;
@@ -87,9 +88,6 @@ public class MIDIParser {
                     if (sm.getCommand() == NOTE_ON) {
                         int key = sm.getData1();
                         Note newNote = new Note(tick, key+transpose, -1, 0);
-                        if (!noteDeque.isEmpty()) {
-                            noteDeque.peekLast().setDelay(tick - noteDeque.peekLast().getTick());
-                        }
                         noteDeque.add(newNote);
                     } else if (sm.getCommand() == NOTE_OFF) {
                         int key = sm.getData1();
@@ -107,11 +105,39 @@ public class MIDIParser {
             }
             System.out.println();
         }
+        this.sortAndAdjustDelaysAndDurations();
         return this.parsedMIDI;
     }
     
+    /**
+     *
+     * @param file
+     */
     public void setMidiFile(File file) {
         this.midiFile = file;
+    }
+    
+    private ArrayList<Note> sortAndAdjustDelaysAndDurations() {
+        Collections.sort(this.parsedMIDI);
+        ArrayDeque<Note> helperDeque = new ArrayDeque<>();
+        long comparedTick = 0;
+        Iterator<Note> iter = this.parsedMIDI.iterator();
+        while (iter.hasNext()) {
+            Note n = iter.next();
+            if (n.getTick() > comparedTick) {
+                while (!helperDeque.isEmpty()) {
+                    Note comparedNote = helperDeque.pollFirst();
+                    if (comparedNote.getDuration() < n.getTick() - comparedTick) {
+                        comparedNote.setDuration(n.getTick() - comparedTick);
+                    }
+                }
+                comparedTick = n.getTick();
+            }
+            helperDeque.add(n);
+            
+        }
+        
+        return this.parsedMIDI;
     }
     
     
