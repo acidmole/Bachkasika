@@ -44,7 +44,7 @@ public class Trie {
     }
     
     public int[] getRandomSequence() {
-        return this.root.getRandomChild(0, new int[this.chainLength]);
+        return this.root.fillSequence(0, new int[this.chainLength]);
     }
     
     private ArrayList<Note> filterHighNotesFromList(ArrayList<Note> noteList) {

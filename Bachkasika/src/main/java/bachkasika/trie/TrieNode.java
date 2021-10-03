@@ -23,7 +23,6 @@ public class TrieNode {
     }
     
     public void addChildren(int[] sequence, int level) {
-        System.out.println(Arrays.toString(sequence) + ", olen tasolla " + level);
         if (level < sequence.length) {
             this.childFrequence[sequence[level]]++;
             if (this.children[sequence[level]] == null) {
@@ -31,26 +30,34 @@ public class TrieNode {
             }
             this.children[sequence[level]].addChildren(sequence, level+1);
         }
-        
     }
     
     public TrieNode[] getChildren() {
         return this.children;
     }
     
-    public int[] getRandomChild(int depthRemaining, int[] sequence) {
-        if (depthRemaining < 1) {
+    public int[] fillSequence(int depthRemaining, int[] sequence) {
+        if (depthRemaining == sequence.length) {
             return sequence;
         }
-        int nextChild = this.weighedRandomChild();
-        
-        return sequence;
+        int nextChild = this.randomChild();
+        sequence[depthRemaining] = nextChild;
+        return this.children[nextChild].fillSequence(depthRemaining+1, sequence);
     }
     
-    private int weighedRandomChild() {
-        // weighless atm
+    private int randomChild() {
         Random rn = new Random();
-        return rn.nextInt(128);
+        int child;
+        while (true) {
+            child = 40 + rn.nextInt(60);
+            if (this.children[child] != null) {
+                return child;
+            }
+        }
+    }
+    
+    private int findLeaf(int[] sequence) {
+        
     }
     
     @Override
