@@ -19,7 +19,7 @@ import lombok.Data;
  * 
  */
 @AllArgsConstructor @NoArgsConstructor @Data
-public class Note implements Comparable<Note>{
+public class Note implements Comparable<Note> {
     
     private long tick;
     private int key;
@@ -45,7 +45,7 @@ public class Note implements Comparable<Note>{
     
     @Override
     public String toString() {
-        return "Tick: "+ this.tick + ", key: " + this.key + ", duration: " 
+        return "Tick: " + this.tick + ", key: " + this.key + ", duration: " 
                 + this.duration + ", delay " + this.delay;
     }
 

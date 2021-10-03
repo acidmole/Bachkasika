@@ -1,10 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package bachkasika.trie;
 
-import java.util.Arrays;
+import java.util.ArrayDeque;
 import java.util.Random;
 
 /**
@@ -28,7 +24,7 @@ public class TrieNode {
             if (this.children[sequence[level]] == null) {
                 this.children[sequence[level]] = new TrieNode();
             }
-            this.children[sequence[level]].addChildren(sequence, level+1);
+            this.children[sequence[level]].addChildren(sequence, level + 1);
         }
     }
     
@@ -42,7 +38,7 @@ public class TrieNode {
         }
         int nextChild = this.randomChild();
         sequence[depthRemaining] = nextChild;
-        return this.children[nextChild].fillSequence(depthRemaining+1, sequence);
+        return this.children[nextChild].fillSequence(depthRemaining + 1, sequence);
     }
     
     private int randomChild() {
@@ -56,20 +52,14 @@ public class TrieNode {
         }
     }
     
-    private int findLeaf(int[] sequence) {
-        
-    }
-    
     @Override
     public String toString() {
         String concat = "";
-        for (int i=0; i<128; i++) {
-            if(this.children[i] != null) {
+        for (int i = 0; i < 128; i++) {
+            if (this.children[i] != null) {
                 concat += ("Lapsi: " + i + ", frekvenssi: " + this.childFrequence[i] + "\n");
             }
         }
         return concat;
     }
-    
-    
 }

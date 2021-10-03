@@ -87,7 +87,7 @@ public class MIDIParser {
 
                     if (sm.getCommand() == NOTE_ON) {
                         int key = sm.getData1();
-                        Note newNote = new Note(tick, key+transpose, -1, 0);
+                        Note newNote = new Note(tick, key + transpose, -1, 0);
                         noteDeque.add(newNote);
                     } else if (sm.getCommand() == NOTE_OFF) {
                         int key = sm.getData1();
@@ -101,7 +101,8 @@ public class MIDIParser {
                                 break;
                             }
                         }
-                    }                 }
+                    }
+                }
             }
             System.out.println();
         }

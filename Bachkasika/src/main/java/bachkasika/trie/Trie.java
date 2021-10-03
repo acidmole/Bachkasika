@@ -63,15 +63,13 @@ public class Trie {
             helperList.add(n);
             comparedTick = n.getTick();
         }
-       Note highestNote = Collections.max(helperList);
-       finalList.add(highestNote);
-       
-       return finalList;
+        Note highestNote = Collections.max(helperList);
+        finalList.add(highestNote);
+        return finalList;
     }
     
     private int[][] trimAndInsertSequences(ArrayList<Note> filteredNoteList) {
-        int[][] sequences = new int[this.chainLength * filteredNoteList.size() +1][this.chainLength];
-        
+        int[][] sequences = new int[this.chainLength * filteredNoteList.size() + 1][this.chainLength];
         System.out.println(filteredNoteList.size());
         for (int i = 0; i < (filteredNoteList.size() - this.chainLength); i++) {
             int[] readySequence = new int[this.chainLength];

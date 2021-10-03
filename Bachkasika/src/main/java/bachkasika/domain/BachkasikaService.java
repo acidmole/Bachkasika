@@ -33,12 +33,7 @@ public class BachkasikaService {
             long end = System.currentTimeMillis();
             Trie trie = new Trie(8);
             trie.insertFromNoteList(sheet);
-            Arrays.toString(trie.getRandomSequence());
-            Arrays.toString(trie.getRandomSequence());
-            Arrays.toString(trie.getRandomSequence());
-            Arrays.toString(trie.getRandomSequence());
-            Arrays.toString(trie.getRandomSequence());
-            System.out.println("Käytin aikaa " + (end - start)/1000.0 + " sekuntia.");
+            System.out.println("Käytin aikaa " + (end - start) / 1000.0 + " sekuntia.");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Virhe tapahtui Midin käsittelyssä.");
