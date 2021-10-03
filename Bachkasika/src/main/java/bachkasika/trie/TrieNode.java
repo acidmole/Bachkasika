@@ -4,7 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Random;
 
 /**
- *
+ * Solmusta vastaava luokka Trie-rakenteessa
  * @author hede
  */
 public class TrieNode {
@@ -18,6 +18,11 @@ public class TrieNode {
         this.childFrequence = new int[128];
     }
     
+    /**
+     * Lisää solmulle lapsen.
+     * @param sequence kaikki lapset
+     * @param level millä puun tasolla ollaan
+     */
     public void addChildren(int[] sequence, int level) {
         if (level < sequence.length) {
             this.childFrequence[sequence[level]]++;
@@ -28,10 +33,20 @@ public class TrieNode {
         }
     }
     
+    /**
+     *
+     * @return solmun lapset
+     */
     public TrieNode[] getChildren() {
         return this.children;
     }
     
+    /**
+     * Täyttää annetun taulukon jollain lapsien ketjulla.
+     * @param depthRemaining montako tasoa vielä liikutaan alas Triessä
+     * @param sequence taulukko, johon lapset täytetään
+     * @return täytetty taulukko
+     */
     public int[] fillSequence(int depthRemaining, int[] sequence) {
         if (depthRemaining == sequence.length) {
             return sequence;
@@ -41,6 +56,10 @@ public class TrieNode {
         return this.children[nextChild].fillSequence(depthRemaining + 1, sequence);
     }
     
+    /**
+     * Arpoo satunnaisen solmun lapsista. Ei ole vielä painotettu.
+     * @return lapsen arvo children[] taulukossa
+     */
     private int randomChild() {
         Random rn = new Random();
         int child;

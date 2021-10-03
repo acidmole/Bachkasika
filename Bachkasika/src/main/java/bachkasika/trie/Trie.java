@@ -13,40 +13,60 @@ import java.util.Iterator;
 /**
  * @author hede
  * 
- * Luokka on verkko, joka tallentaa sävelkorkeudeltaan erilaisia nuotteja.
- * Sävelkorkeudeltaan samanlaiset nuotit voivat olla erilaisia kestoltaan ja
- * päällekkäisyydeltään, joten saman korkeuden sisältävät nuotit ovat
- * talletettu samaan listaan. Tallennettaessa vertaillaan,  jos täsmälleen 
- * samanlainen nuotti on jo rakenteessa. 
- * 
- * Jokaisella verkon erilaisella nuotilla on talletettu myös verkon
- * naapurisolmut, joihin voidaan siirtyä.
+ * Luokka tallentaa chainLength-muuttujan pituisia sävelketjuja. Viitteet
+ * tallennetaan @see TrieNode olioina.
  */
 public class Trie {
     
     private final int chainLength;
     private TrieNode root;
     
+    /**
+     *
+     * @param chainLength luotavien puun juurien pituus
+     */
     public Trie(int chainLength) {
         
         this.chainLength = chainLength;
         this.root = new TrieNode();
     }
     
+    /**
+     * Tämä luokka tekee chainLengthin pituisia sävelkulkuja, jotka talletetaan
+     * Triehen.
+     * 
+     * @param noteList sävelkorkeudet Note-olioina
+     */
     public void insertFromNoteList(ArrayList<Note> noteList) {
         
         noteList = this.filterHighNotesFromList(noteList);
         int[][] sequences = this.trimAndInsertSequences(noteList);
     }
     
+    /**
+     * Syöttää tietorakenteeseen annetun ketjun.
+     * @param sequence 
+     */
     private void insert(int[] sequence) {
         this.root.addChildren(sequence, 0);
     }
     
+    /**
+     * Kokonaan uuden ketjun generointia toteuttava metodi.
+     * 
+     * @return satunnainen, chainLength-pituinen ketju Triestä.
+     */
     public int[] getRandomSequence() {
         return this.root.fillSequence(0, new int[this.chainLength]);
     }
     
+    /**
+     * Metodi, jonka tehtävä on palauttaa minkä tahansa Note-olioita
+     * sisältävän listan korkeimmat soivat nuotit.
+     * 
+     * @param noteList Note-olion lista
+     * @return korkeimmat nuotit sisältävä lista
+     */
     private ArrayList<Note> filterHighNotesFromList(ArrayList<Note> noteList) {
         
         ArrayList<Note> helperList = new ArrayList<>();
@@ -68,13 +88,19 @@ public class Trie {
         return finalList;
     }
     
+    /**
+     * Katkoo annetun listan m*n-pituisiksi sekvensseiksi, jotka voidaan
+     * ajaa Triehen.
+     * @param filteredNoteList vain yksittäisiä nuotteja kerrallaan sisältävä lista
+     * @return sekvenssit sisältävä taulukko
+     */
     private int[][] trimAndInsertSequences(ArrayList<Note> filteredNoteList) {
         int[][] sequences = new int[this.chainLength * filteredNoteList.size() + 1][this.chainLength];
         System.out.println(filteredNoteList.size());
         for (int i = 0; i < (filteredNoteList.size() - this.chainLength); i++) {
             int[] readySequence = new int[this.chainLength];
             for (int j = 0; j < this.chainLength; j++) {
-                sequences[i][j] = filteredNoteList.get(i+j).getKey();
+                sequences[i][j] = filteredNoteList.get(i + j).getKey();
                 readySequence[j] = sequences[i][j];
             }
             this.insert(readySequence);

@@ -118,6 +118,12 @@ public class MIDIParser {
         this.midiFile = file;
     }
     
+    /**
+     * Järjestää eri raidat ajanhetken perusteella kasvavaan järjestykseen sekä 
+     * sovittaa nuottien pituudet. Poistaa staccatot, mutta myös tasapäistää 
+     * erityyppiset nuotinnukset.
+     * @return Järjestetty ja pituudet sovitettu Note-oliotaulukko
+     */
     private ArrayList<Note> sortAndAdjustDelaysAndDurations() {
         Collections.sort(this.parsedMIDI);
         ArrayDeque<Note> helperDeque = new ArrayDeque<>();
