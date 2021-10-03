@@ -14,7 +14,6 @@ import java.util.Random;
 public class MarkovChain {
     
     private Trie trie;
-    private ArrayList<NoteNode> chain;
     
     public MarkovChain(Trie trie) {
         this.trie = trie;

@@ -8,7 +8,6 @@ package bachkasika.domain;
 import bachkasika.io.BachkasikaFileService;
 import bachkasika.midi.MIDIParser;
 import bachkasika.trie.MarkovChain;
-import bachkasika.trie.NoteNode;
 import bachkasika.trie.Trie;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,6 +30,9 @@ public class BachkasikaService {
             parser.parse(0);
             ArrayList<Note> sheet2 = parser.getMIDINotes();
             long end = System.currentTimeMillis();
+            Trie trie = new Trie(4);
+            trie.insertFromNoteList(sheet);
+            trie.find(0);
             System.out.println("Käytin aikaa " + (end - start)/1000.0 + " sekuntia.");
         } catch (Exception e) {
             e.printStackTrace();
