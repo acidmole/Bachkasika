@@ -37,10 +37,10 @@ public class Trie {
      * 
      * @param noteList sävelkorkeudet Note-olioina
      */
-    public void insertFromNoteList(ArrayList<Note> noteList) {
+    public int[][] insertFromNoteList(ArrayList<Note> noteList) {
         
         noteList = this.filterHighNotesFromList(noteList);
-        int[][] sequences = this.trimAndInsertSequences(noteList);
+        return this.trimAndInsertSequences(noteList);
     }
     
     /**
@@ -49,6 +49,10 @@ public class Trie {
      */
     private void insert(int[] sequence) {
         this.root.addChildren(sequence, 0);
+    }
+    
+    public TrieNode getRoot() {
+        return this.root;
     }
     
     /**
@@ -65,10 +69,11 @@ public class Trie {
      * sisältävän listan korkeimmat soivat nuotit.
      * 
      * @param noteList Note-olion lista
-     * @return korkeimmat nuotit sisältävä lista
+     * @return korkeimmat nuotit sisältävä lista. jos ei ole tarpeeksi
+     * elementtejä, palautetaan null
      */
-    private ArrayList<Note> filterHighNotesFromList(ArrayList<Note> noteList) {
-        
+    public ArrayList<Note> filterHighNotesFromList(ArrayList<Note> noteList) {
+        if (noteList.size() < this.chainLength) return null;
         ArrayList<Note> helperList = new ArrayList<>();
         ArrayList<Note> finalList = new ArrayList<>();
         long comparedTick = 0;
@@ -83,18 +88,19 @@ public class Trie {
             helperList.add(n);
             comparedTick = n.getTick();
         }
+        System.out.println(comparedTick);
         Note highestNote = Collections.max(helperList);
         finalList.add(highestNote);
         return finalList;
     }
     
     /**
-     * Katkoo annetun listan m*n-pituisiksi sekvensseiksi, jotka voidaan
-     * ajaa Triehen.
+     * Katkoo annetun listan chainLength*n -pituisiksi sekvensseiksi, jotka 
+     * voidaan ajaa Triehen.
      * @param filteredNoteList vain yksittäisiä nuotteja kerrallaan sisältävä lista
      * @return sekvenssit sisältävä taulukko
      */
-    private int[][] trimAndInsertSequences(ArrayList<Note> filteredNoteList) {
+    public int[][] trimAndInsertSequences(ArrayList<Note> filteredNoteList) {
         int[][] sequences = new int[this.chainLength * filteredNoteList.size() + 1][this.chainLength];
         System.out.println(filteredNoteList.size());
         for (int i = 0; i < (filteredNoteList.size() - this.chainLength); i++) {

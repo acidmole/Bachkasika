@@ -42,7 +42,7 @@ public class TrieNode {
     }
     
     /**
-     * Täyttää annetun taulukon jollain lapsien ketjulla.
+     * Täyttää annetun kokoisen taulukon jollain ketjulla.
      * @param depthRemaining montako tasoa vielä liikutaan alas Triessä
      * @param sequence taulukko, johon lapset täytetään
      * @return täytetty taulukko
