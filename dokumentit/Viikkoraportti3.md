@@ -1,4 +1,4 @@
-# Viikkoraportti 2
+# Viikkoraportti 3
 
 ## Tehdyt asiat
 Väijytty trie-rakenteen toimintaperiaatteita ja toteutuksia. Huomattu, että nykyisellä rakenteella parseroidun MIDI-listan lisääminen on aikavaativuus on luokkaa O(n²). Todennäköisillä syötemäärillä se ei tosin ole merkityksellistä.
