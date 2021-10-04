@@ -1,4 +1,4 @@
-# Viikkoraportti 2
+# Viikkoraportti 4
 
 ## Tehdyt asiat
 Ohjaajan toimesta huomattiin, että tietorakenne ei vastaa tehtävänantoa ja koko rakenne jouduttiin tekemään uudestaan. Tämä vaikutti kaikkiin edeltäviin rakenteisiinkin, sillä uusi rakenne ei mahdollistanut kaikkia samoja ominaisuuksia kuin vanha, viallinen rakenne.
