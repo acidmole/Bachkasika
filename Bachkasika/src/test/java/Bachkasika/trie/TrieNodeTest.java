@@ -36,7 +36,7 @@ public class TrieNodeTest {
     
     @Test
     public void fillSequenceFillsRight() {
-        int[] testFill = testRoot.fillSequence(0, new int[5]);
+        int[] testFill = testRoot.fillSequence(0, new int[5], testRoot);
         assertEquals(60, testFill[0]);
     }
     

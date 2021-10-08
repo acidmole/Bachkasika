@@ -61,7 +61,7 @@ public class Trie {
         if (amount > sequence.length) {
             return new int[amount];
         }
-        return this.root.fillSequence(sequence.length - amount, sequence);
+        return this.root.fillSequence(sequence.length - amount, sequence, this.root);
         
     }
     
@@ -75,7 +75,7 @@ public class Trie {
      * @return satunnainen, chainLength-pituinen ketju Triestä.
      */
     public int[] getRandomSequence() {
-        return this.root.fillSequence(0, new int[this.chainLength]);
+        return this.root.fillSequence(0, new int[this.chainLength], this.root);
     }
     
     /**

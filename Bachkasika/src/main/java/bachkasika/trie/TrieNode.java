@@ -41,21 +41,48 @@ public class TrieNode {
         return this.children;
     }
     
+    
     /**
      * Täyttää annetun kokoisen taulukon jollain ketjulla.
      * @param depth mitä kohtaa taulukossa täytetään. Kyseessä on myös Trien
      * tämänhetkinen syvyys.
      * @param sequence taulukko, johon lapset täytetään
+     * @param node solmu, josta alkaen lähdetään täyttämään
      * @return täytetty taulukko
      */
-    public int[] fillSequence(int depth, int[] sequence) {
+    public int[] fillSequence(int depth, int[] sequence, TrieNode node) {
         if (depth == sequence.length) {
             return sequence;
         }
-        int nextChild = this.randomChild();
+        int nextChild = node.randomChild();
         sequence[depth] = nextChild;
-        return this.children[nextChild].fillSequence(depth + 1, sequence);
+        return this.children[nextChild].fillSequence(depth + 1, sequence, node);
     }
+    
+    
+    /**
+     * Etsii ja täyttää annettuun taulukkoon tyhjät kohdat. Jos taulukossa ei
+     * ole tyhjiä kohtia, palautetaan alkuperäinen taulukko.
+     * 
+     * Metodi etsii puusta lapset.
+     * 
+     * @param sequence 
+     * @return täytetty taulukko
+     * @see fillSequence
+     */
+    public int[] findAndFillBranch(int[] sequence, TrieNode node) {
+        if (sequence[sequence.length-1] >= 0) {
+            return sequence;
+        }
+        int i = 0;
+        TrieNode nextChild = null;
+        while (i < sequence.length && sequence[i] >= 0) {
+            nextChild = node.getChildren()[sequence[i]];
+            i++;
+        }
+        return(this.fillSequence(i, sequence, nextChild));
+    }
+    
     
     /**
      * Arpoo satunnaisen solmun lapsista. Ei ole vielä painotettu.
