@@ -51,6 +51,20 @@ public class Trie {
         this.root.addChildren(sequence, 0);
     }
     
+    /**
+     * Metodi, joka etsii rakenteesta jatkumon annetulle sekvenssille.
+     * @param sequence annettu sekvenssi
+     * @param amount täytettävien kohtien määrä
+     * @return täydennetty sekvenssi. Virheellisillä syötteillä tyhjä taulu.
+     */
+    public int[] fill(int[] sequence, int amount) {
+        if (amount > sequence.length) {
+            return new int[amount];
+        }
+        return this.root.fillSequence(sequence.length - amount, sequence);
+        
+    }
+    
     public TrieNode getRoot() {
         return this.root;
     }

@@ -43,17 +43,18 @@ public class TrieNode {
     
     /**
      * Täyttää annetun kokoisen taulukon jollain ketjulla.
-     * @param depthRemaining montako tasoa vielä liikutaan alas Triessä
+     * @param depth mitä kohtaa taulukossa täytetään. Kyseessä on myös Trien
+     * tämänhetkinen syvyys.
      * @param sequence taulukko, johon lapset täytetään
      * @return täytetty taulukko
      */
-    public int[] fillSequence(int depthRemaining, int[] sequence) {
-        if (depthRemaining == sequence.length) {
+    public int[] fillSequence(int depth, int[] sequence) {
+        if (depth == sequence.length) {
             return sequence;
         }
         int nextChild = this.randomChild();
-        sequence[depthRemaining] = nextChild;
-        return this.children[nextChild].fillSequence(depthRemaining + 1, sequence);
+        sequence[depth] = nextChild;
+        return this.children[nextChild].fillSequence(depth + 1, sequence);
     }
     
     /**
