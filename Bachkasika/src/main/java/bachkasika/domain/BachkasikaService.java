@@ -31,8 +31,12 @@ public class BachkasikaService {
             parser.parse(0);
             ArrayList<Note> sheet2 = parser.getMIDINotes();
             long end = System.currentTimeMillis();
-            Trie trie = new Trie(8);
+            Trie trie = new Trie(5);
             trie.insertFromNoteList(sheet);
+            trie.insertFromNoteList(sheet2);
+            MarkovChain mc = new MarkovChain(trie);
+            System.out.println(Arrays.toString(mc.createChain(30)));
+            
             System.out.println("Käytin aikaa " + (end - start) / 1000.0 + " sekuntia.");
         } catch (Exception e) {
             e.printStackTrace();

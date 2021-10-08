@@ -143,8 +143,19 @@ public class MIDIParser {
             helperDeque.add(n);
             
         }
-        
         return this.parsedMIDI;
+    }
+    
+    public File writetoMIDI(ArrayList<Note> notes) {
+        
+        return null;
+    }
+    
+    public ArrayList<Note> keysToSequence(int[] keys, int[] sequenceFrame) {
+        ArrayList<Note> notes = new ArrayList<>();
+        
+        
+        return notes;
     }
     
     

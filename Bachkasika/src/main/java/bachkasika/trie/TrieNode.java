@@ -12,11 +12,23 @@ public class TrieNode {
     private TrieNode[] children;
     private int key;
     private int[] childFrequence;
+    private final int randomStarts;
+    private final int randomStops;
     
     public TrieNode() {
         this.children = new TrieNode[128];
         this.childFrequence = new int[128];
+        this.randomStarts = 40;
+        this.randomStops = 99;
     }
+    
+    public TrieNode(int randomStarts, int randomStops) {
+        this.children = new TrieNode[128];
+        this.childFrequence = new int[128];
+        this.randomStarts = randomStarts;
+        this.randomStops = randomStops;
+    }
+
     
     /**
      * Lisää solmulle lapsen.
@@ -56,7 +68,7 @@ public class TrieNode {
         }
         int nextChild = node.randomChild();
         sequence[depth] = nextChild;
-        return this.children[nextChild].fillSequence(depth + 1, sequence, node);
+        return node.children[nextChild].fillSequence(depth + 1, sequence, node);
     }
     
     
@@ -70,14 +82,14 @@ public class TrieNode {
      * @return täytetty taulukko
      * @see fillSequence
      */
-    public int[] findAndFillBranch(int[] sequence, TrieNode node) {
-        if (sequence[sequence.length-1] >= 0) {
+    public int[] findAndFillBranch(int[] sequence) {
+        if (sequence[sequence.length-1] > 0) {
             return sequence;
         }
         int i = 0;
         TrieNode nextChild = null;
-        while (i < sequence.length && sequence[i] >= 0) {
-            nextChild = node.getChildren()[sequence[i]];
+        while (i < sequence.length && sequence[i] > 0) {
+            nextChild = this.getChildren()[sequence[i]];
             i++;
         }
         return(this.fillSequence(i, sequence, nextChild));
@@ -86,13 +98,14 @@ public class TrieNode {
     
     /**
      * Arpoo satunnaisen solmun lapsista. Ei ole vielä painotettu.
+     * Arpoo arvojen 40 ja 99 välistä.
      * @return lapsen arvo children[] taulukossa
      */
     private int randomChild() {
         Random rn = new Random();
         int child;
         while (true) {
-            child = 40 + rn.nextInt(60);
+            child = this.randomStarts + rn.nextInt(this.randomStops + 1 - this.randomStarts );
             if (this.children[child] != null) {
                 return child;
             }

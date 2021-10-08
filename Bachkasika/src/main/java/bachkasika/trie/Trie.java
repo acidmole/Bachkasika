@@ -21,6 +21,7 @@ public class Trie {
     private final int chainLength;
     private TrieNode root;
     
+    
     /**
      *
      * @param chainLength luotavien puun juurien pituus
@@ -29,6 +30,7 @@ public class Trie {
         
         this.chainLength = chainLength;
         this.root = new TrieNode();
+        
     }
     
     /**
@@ -43,13 +45,6 @@ public class Trie {
         return this.trimAndInsertSequences(noteList);
     }
     
-    /**
-     * Syöttää tietorakenteeseen annetun ketjun.
-     * @param sequence 
-     */
-    private void insert(int[] sequence) {
-        this.root.addChildren(sequence, 0);
-    }
     
     /**
      * Metodi, joka etsii rakenteesta jatkumon annetulle sekvenssille.
@@ -62,11 +57,18 @@ public class Trie {
             return new int[amount];
         }
         return this.root.fillSequence(sequence.length - amount, sequence, this.root);
-        
+    }
+    
+    public int[] findAndFill(int[] sequence) {
+        return this.root.findAndFillBranch(sequence);
     }
     
     public TrieNode getRoot() {
         return this.root;
+    }
+    
+    public int getChainLength() {
+        return this.chainLength;
     }
     
     /**
@@ -116,7 +118,6 @@ public class Trie {
      */
     public int[][] trimAndInsertSequences(ArrayList<Note> filteredNoteList) {
         int[][] sequences = new int[this.chainLength * filteredNoteList.size() + 1][this.chainLength];
-        System.out.println(filteredNoteList.size());
         for (int i = 0; i < (filteredNoteList.size() - this.chainLength); i++) {
             int[] readySequence = new int[this.chainLength];
             for (int j = 0; j < this.chainLength; j++) {
@@ -127,5 +128,14 @@ public class Trie {
         }
         return sequences;
     }
+    
+     /**
+     * Syöttää tietorakenteeseen annetun ketjun.
+     * @param sequence 
+     */
+    private void insert(int[] sequence) {
+        this.root.addChildren(sequence, 0);
+    }
+
 
 }
