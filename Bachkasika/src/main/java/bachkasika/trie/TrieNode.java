@@ -81,7 +81,6 @@ public class TrieNode {
         int i = 0;
         TrieNode nextChild = null;
         while (i < sequence.length && sequence[i] > 0) {
-            System.out.println(i + " " + nextChild);
             nextChild = this.getChildren()[sequence[i]];
             i++;
         }
