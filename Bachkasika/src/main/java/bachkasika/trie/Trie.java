@@ -59,16 +59,13 @@ public class Trie {
         return this.root.fillSequence(sequence.length - amount, sequence, this.root);
     }
     
+    /**
+     * Metodi, joka etsii ja täydentää tyhjät kohdat (arvo <= 0) taulukossa.
+     * @param sequence täydennettävä taulukko
+     * @return täydennetty taulukko
+     */
     public int[] findAndFill(int[] sequence) {
         return this.root.findAndFillBranch(sequence);
-    }
-    
-    public TrieNode getRoot() {
-        return this.root;
-    }
-    
-    public int getChainLength() {
-        return this.chainLength;
     }
     
     /**
@@ -135,6 +132,14 @@ public class Trie {
      */
     private void insert(int[] sequence) {
         this.root.addChildren(sequence, 0);
+    }
+    
+    public TrieNode getRoot() {
+        return this.root;
+    }
+    
+    public int getChainLength() {
+        return this.chainLength;
     }
 
 

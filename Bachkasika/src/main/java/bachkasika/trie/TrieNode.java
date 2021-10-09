@@ -1,6 +1,7 @@
 package bachkasika.trie;
 
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -46,16 +47,7 @@ public class TrieNode {
     }
     
     /**
-     *
-     * @return solmun lapset
-     */
-    public TrieNode[] getChildren() {
-        return this.children;
-    }
-    
-    
-    /**
-     * Täyttää annetun kokoisen taulukon jollain ketjulla.
+     * Täyttää annetun kokoisen, tyhjän taulukon jollain ketjulla.
      * @param depth mitä kohtaa taulukossa täytetään. Kyseessä on myös Trien
      * tämänhetkinen syvyys.
      * @param sequence taulukko, johon lapset täytetään
@@ -89,6 +81,7 @@ public class TrieNode {
         int i = 0;
         TrieNode nextChild = null;
         while (i < sequence.length && sequence[i] > 0) {
+            System.out.println(i + " " + nextChild);
             nextChild = this.getChildren()[sequence[i]];
             i++;
         }
@@ -122,4 +115,15 @@ public class TrieNode {
         }
         return concat;
     }
+
+    /**
+     *
+     * @return solmun lapset
+     */
+    public TrieNode[] getChildren() {
+        return this.children;
+    }
+    
+    
+
 }

@@ -26,7 +26,7 @@ public class TrieNodeTest {
     
     @Before
     public void setUp() {
-        testRoot = new TrieNode();
+        testRoot = new TrieNode(40, 99);
         testSequence = new int[5];
         for (int i=0; i < 5; i++) {
             testSequence[i] = i + 60;
@@ -39,5 +39,25 @@ public class TrieNodeTest {
         int[] testFill = testRoot.fillSequence(0, new int[5], testRoot);
         assertEquals(60, testFill[0]);
     }
+    
+    @Test
+    public void trieNodeCanBeFilledFromMiddle() {
+        int[] testSeq = {12, 12, 12, -1, -1};
+        int[] testFill = testRoot.fillSequence(3, testSeq, testRoot);
+        assertEquals(12, testSeq[0]);
+        assertEquals(12, testSeq[1]);
+        assertEquals(12, testSeq[2]);
+        assertFalse(testSeq[3] == -1);
+        assertFalse(testSeq[4] == -1);
+    }
+    
+    @Test
+    public void findAndFillBranchReturnsFullArray() {
+        int[] filledSeq = testRoot.findAndFillBranch(testSequence);
+        assertEquals(62, testSequence[2]);
+        assertEquals(63, testSequence[3]);
+        assertEquals(64, testSequence[4]);
+    }
+    
     
 }
