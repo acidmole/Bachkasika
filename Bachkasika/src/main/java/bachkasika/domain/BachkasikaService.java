@@ -9,9 +9,12 @@ import bachkasika.io.BachkasikaFileService;
 import bachkasika.midi.MIDIParser;
 import bachkasika.trie.MarkovChain;
 import bachkasika.trie.Trie;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -19,8 +22,14 @@ import java.util.Collections;
  */
 public class BachkasikaService {
     
-    public BachkasikaService() {
-        try {
+    private BachkasikaFileService bsFileService;
+    private List<File> fileList;
+    
+    public BachkasikaService() throws Exception {
+        
+            BachkasikaFileService bsFileService = new BachkasikaFileService();
+            this.fileList = bsFileService.getFileList();
+            /*
             long start = System.currentTimeMillis();
             BachkasikaFileService bsFileService = new BachkasikaFileService("bwv539.mid");
             MIDIParser parser = new MIDIParser(bsFileService.getMidiFile());
@@ -38,12 +47,19 @@ public class BachkasikaService {
             System.out.println(Arrays.toString(mc.createChain(30)));
             
             System.out.println("Käytin aikaa " + (end - start) / 1000.0 + " sekuntia.");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Virhe tapahtui Midin käsittelyssä.");
-
-        }
-
-    
+            */
     }
+    
+    public void createMarkovChain() {
+        System.out.println("Ketjusaha käynnissä");
+    }
+    
+    public BachkasikaFileService getFileService() {
+        return this.bsFileService;
+    }
+    
+    public List<File> getFileList() {
+        return this.fileList;
+    }
+    
 }

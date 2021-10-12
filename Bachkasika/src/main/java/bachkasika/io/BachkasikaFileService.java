@@ -6,9 +6,9 @@
 package bachkasika.io;
 
 import lombok.Data;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -20,15 +20,15 @@ import java.io.File;
  */
 @Data
 public class BachkasikaFileService {
-
-    private File midiFile;
     
-    public BachkasikaFileService(String fileName) {
-        this.midiFile = new File(fileName);        
+    private final File filePath;
+
+    public BachkasikaFileService() {
+        this.filePath = new File("midis/");
     }
     
-    public void addNewFile(String name) {
-        this.midiFile = new File(name);
+    public List<File> getFileList() {
+        return Arrays.asList(this.filePath.listFiles());
     }
     
 }
