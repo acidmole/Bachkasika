@@ -24,11 +24,21 @@ public class BachkasikaService {
     
     private BachkasikaFileService bsFileService;
     private List<File> fileList;
+    private MIDIParser parser;
+    private Trie trie;
+    private MarkovChain chain;
     
-    public BachkasikaService() throws Exception {
+    public BachkasikaService() {
         
+        try {
             BachkasikaFileService bsFileService = new BachkasikaFileService();
             this.fileList = bsFileService.getFileList();
+            parser = new MIDIParser();
+            this.trie = new Trie(5);
+            this.chain = new MarkovChain(trie);
+        } catch (Exception e) {
+            System.out.println("I/O-poikkeus tiedostonkäsittelyssä.");
+        }
             /*
             long start = System.currentTimeMillis();
             BachkasikaFileService bsFileService = new BachkasikaFileService("bwv539.mid");
@@ -50,8 +60,17 @@ public class BachkasikaService {
             */
     }
     
-    public void createMarkovChain() {
-        System.out.println("Ketjusaha käynnissä");
+    public String createMarkovChain(List<File> midiList) {
+        try {
+            for (File f : midiList) {
+                this.parser.setMidiFile(f);
+                this.parser.parse(0);
+            }
+            this.trie.insertFromNoteList(this.parser.getMIDINotes());
+            return "MIDI ok.";
+        } catch (Exception e) {
+            return "Midin parserointi epäonnistui";
+        }
     }
     
     public BachkasikaFileService getFileService() {

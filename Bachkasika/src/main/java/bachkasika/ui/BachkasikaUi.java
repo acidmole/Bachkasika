@@ -6,10 +6,7 @@
 package bachkasika.ui;
 
 import bachkasika.domain.BachkasikaService;
-import bachkasika.io.BachkasikaFileService;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
@@ -60,7 +57,7 @@ public class BachkasikaUi extends Application {
         topBox.getChildren().add(runButton);
         
         runButton.setOnAction(event -> {
-            this.bsService.createMarkovChain();
+            this.bsService.createMarkovChain(selectedMidis.getSelectionModel().getSelectedItems());
         });
 
         confirm.setOnAction(event -> {

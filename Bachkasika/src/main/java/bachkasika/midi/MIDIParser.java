@@ -46,6 +46,12 @@ public class MIDIParser {
         this.midiFile = file;
         this.parsedMIDI = new ArrayList<>();
     }
+
+    public MIDIParser() throws Exception {
+        this.midiFile = null;
+        this.parsedMIDI = new ArrayList<>();
+    }
+
     
     /**
      * @return valmis lista kaikista soitetuista nuoteista ja niiden pituuksista
