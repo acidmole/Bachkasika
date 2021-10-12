@@ -61,7 +61,11 @@ public class BachkasikaService {
     }
     
     public String createMarkovChain(List<File> midiList) {
+        if (midiList.size() == 0) {
+            return "Ei käsiteltävää.";
+        }
         try {
+            System.out.println("Hei!");
             for (File f : midiList) {
                 this.parser.setMidiFile(f);
                 this.parser.parse(0);
@@ -71,6 +75,10 @@ public class BachkasikaService {
         } catch (Exception e) {
             return "Midin parserointi epäonnistui";
         }
+    }
+    
+    public int getChains() {
+        return this.trie.getChains();
     }
     
     public BachkasikaFileService getFileService() {

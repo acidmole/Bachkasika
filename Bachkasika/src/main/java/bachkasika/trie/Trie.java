@@ -20,6 +20,7 @@ public class Trie {
     
     private final int chainLength;
     private TrieNode root;
+    private int chains;
     
     
     /**
@@ -131,6 +132,7 @@ public class Trie {
      * @param sequence 
      */
     private void insert(int[] sequence) {
+        this.chains++;
         this.root.addChildren(sequence, 0);
     }
     
@@ -140,6 +142,10 @@ public class Trie {
     
     public int getChainLength() {
         return this.chainLength;
+    }
+    
+    public int getChains() {
+        return this.chains;
     }
 
 

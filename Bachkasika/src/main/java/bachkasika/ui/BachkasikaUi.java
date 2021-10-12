@@ -46,6 +46,7 @@ public class BachkasikaUi extends Application {
         Button runButton = new Button("Käynnistä");
         Button confirm = new Button("Valitse");
         Button reset = new Button("Reset");
+        Label chains = new Label("Triessä ketjuja: 0");
         
         VBox midiBox = new VBox(midis);
         HBox topBox = new HBox(20);
@@ -55,9 +56,11 @@ public class BachkasikaUi extends Application {
         topBox.getChildren().add(midis);
         topBox.getChildren().add(selectedMidis);
         topBox.getChildren().add(runButton);
+        topBox.getChildren().add(chains);
         
         runButton.setOnAction(event -> {
-            this.bsService.createMarkovChain(selectedMidis.getSelectionModel().getSelectedItems());
+            System.out.println(this.bsService.createMarkovChain(selectedMidis.getItems()));
+            chains.setText("Triessä ketjuja: " + this.bsService.getChains());
         });
 
         confirm.setOnAction(event -> {
