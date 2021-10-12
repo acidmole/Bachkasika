@@ -80,14 +80,16 @@ public class Trie {
     
     /**
      * Metodi, jonka tehtävä on palauttaa minkä tahansa Note-olioita
-     * sisältävän listan korkeimmat soivat nuotit.
+     * sisältävän listan samalla tickillä soivien nuottien korkein nuotti.
      * 
      * @param noteList Note-olion lista
      * @return korkeimmat nuotit sisältävä lista. jos ei ole tarpeeksi
      * elementtejä, palautetaan null
      */
     public ArrayList<Note> filterHighNotesFromList(ArrayList<Note> noteList) {
-        if (noteList.size() < this.chainLength) return null;
+        if (noteList.size() < this.chainLength) {
+            return null;
+        }
         ArrayList<Note> helperList = new ArrayList<>();
         ArrayList<Note> finalList = new ArrayList<>();
         long comparedTick = 0;
@@ -102,7 +104,6 @@ public class Trie {
             helperList.add(n);
             comparedTick = n.getTick();
         }
-        System.out.println(comparedTick);
         Note highestNote = Collections.max(helperList);
         finalList.add(highestNote);
         return finalList;

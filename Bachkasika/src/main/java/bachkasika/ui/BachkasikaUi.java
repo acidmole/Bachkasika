@@ -43,9 +43,9 @@ public class BachkasikaUi extends Application {
         midis.getItems().addAll(fileList);
         
         ListView selectedMidis = new ListView();
-        Button runButton = new Button("Käynnistä");
-        Button confirm = new Button("Valitse");
-        Button reset = new Button("Reset");
+        Button runButton = new Button("Suorita");
+        Button confirm = new Button("Siirrä valinnat");
+        Button reset = new Button("Tyhjennä");
         Label chains = new Label("Triessä ketjuja: 0");
         
         VBox midiBox = new VBox(midis);

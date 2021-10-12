@@ -7,6 +7,7 @@ package bachkasika.midi;
 
 import bachkasika.domain.Note;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,12 +43,12 @@ public class MIDIParser {
      * @param file parseroitava miditiedosto
      * @throws Exception jos parseroinnissa tapahtuu virhe
      */
-    public MIDIParser(File file) throws Exception {
+    public MIDIParser(File file) throws IOException {
         this.midiFile = file;
         this.parsedMIDI = new ArrayList<>();
     }
 
-    public MIDIParser() throws Exception {
+    public MIDIParser() throws IOException {
         this.midiFile = null;
         this.parsedMIDI = new ArrayList<>();
     }
@@ -90,7 +91,6 @@ public class MIDIParser {
                 MidiMessage message = event.getMessage();
                 if (message instanceof ShortMessage) {
                     ShortMessage sm = (ShortMessage) message;
-
                     if (sm.getCommand() == NOTE_ON) {
                         int key = sm.getData1();
                         Note newNote = new Note(tick, key + transpose, -1, 0);
@@ -116,10 +116,6 @@ public class MIDIParser {
         return this.parsedMIDI;
     }
     
-    /**
-     *
-     * @param file
-     */
     public void setMidiFile(File file) {
         this.midiFile = file;
     }
@@ -147,19 +143,18 @@ public class MIDIParser {
                 comparedTick = n.getTick();
             }
             helperDeque.add(n);
-            
         }
         return this.parsedMIDI;
     }
     
     public File writetoMIDI(ArrayList<Note> notes) {
-        
+
         return null;
     }
     
     public ArrayList<Note> keysToSequence(int[] keys, int[] sequenceFrame) {
+ 
         ArrayList<Note> notes = new ArrayList<>();
-        
         
         return notes;
     }

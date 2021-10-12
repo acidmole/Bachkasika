@@ -75,7 +75,7 @@ public class TrieNode {
      * @see fillSequence
      */
     public int[] findAndFillBranch(int[] sequence) {
-        if (sequence[sequence.length-1] > 0) {
+        if (sequence[sequence.length - 1] > 0) {
             return sequence;
         }
         int i = 0;
@@ -84,7 +84,7 @@ public class TrieNode {
             nextChild = this.getChildren()[sequence[i]];
             i++;
         }
-        return(this.fillSequence(i, sequence, nextChild));
+        return (this.fillSequence(i, sequence, nextChild));
     }
     
     
@@ -97,7 +97,7 @@ public class TrieNode {
         Random rn = new Random();
         int child;
         while (true) {
-            child = this.randomStarts + rn.nextInt(this.randomStops + 1 - this.randomStarts );
+            child = this.randomStarts + rn.nextInt(this.randomStops + 1 - this.randomStarts);
             if (this.children[child] != null) {
                 return child;
             }
