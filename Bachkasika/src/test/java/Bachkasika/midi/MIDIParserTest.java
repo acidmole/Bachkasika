@@ -8,7 +8,9 @@ package Bachkasika.midi;
 import bachkasika.domain.Note;
 import bachkasika.io.BachkasikaFileService;
 import bachkasika.midi.MIDIParser;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,6 +26,7 @@ public class MIDIParserTest {
     
     BachkasikaFileService bsFileService;
     MIDIParser testParser;
+    List<File> fileList;
     
     public MIDIParserTest() {
     }
@@ -31,8 +34,9 @@ public class MIDIParserTest {
     @Before
     public void setUp() {
         try {
-            bsFileService = new BachkasikaFileService("testMIDI.mid");
-            testParser = new MIDIParser(bsFileService.getMidiFile());
+            bsFileService = new BachkasikaFileService("test/");
+            this.fileList = bsFileService.getFileList();
+            testParser = new MIDIParser(bsFileService.getFileList().get(0));
         } catch (Exception e) {
         }
     }

@@ -12,6 +12,7 @@ import bachkasika.trie.TrieNode;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -29,6 +30,7 @@ public class TrieTest {
     ArrayList<Note> testSheet;
     BachkasikaFileService bsFileService;
     MIDIParser testParser;
+    List<File> fileList;
     
     public TrieTest() {
     }
@@ -36,9 +38,9 @@ public class TrieTest {
     @Before
     public void setUp() {
         try {
-            bsFileService = new BachkasikaFileService("bwv539.mid");
-            testParser = new MIDIParser(bsFileService.getMidiFile());
-            testSheet = testParser.parse(0);
+            bsFileService = new BachkasikaFileService("midis/");
+            this.fileList = bsFileService.getFileList();
+            testParser = new MIDIParser(bsFileService.getFileList().get(0));
         } catch (Exception e) {
             System.out.println("Virhe MIDI:ssä");
         }

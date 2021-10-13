@@ -120,6 +120,10 @@ public class MIDIParser {
         this.midiFile = file;
     }
     
+    public void resetNoteList() {
+        this.parsedMIDI.clear();
+    }
+    
     /**
      * Järjestää eri raidat ajanhetken perusteella kasvavaan järjestykseen sekä 
      * sovittaa nuottien pituudet. Poistaa staccatot, mutta myös tasapäistää 

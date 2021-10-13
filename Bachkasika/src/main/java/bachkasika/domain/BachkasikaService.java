@@ -31,7 +31,7 @@ public class BachkasikaService {
     public BachkasikaService() {
         
         try {
-            BachkasikaFileService bsFileService = new BachkasikaFileService();
+            BachkasikaFileService bsFileService = new BachkasikaFileService("midis/");
             this.fileList = bsFileService.getFileList();
             parser = new MIDIParser();
             this.trie = new Trie(5);
@@ -60,20 +60,20 @@ public class BachkasikaService {
             */
     }
     
-    public String createMarkovChain(List<File> midiList) {
+    public String createMarkovChain(List<File> midiList, int transpose) {
         if (midiList.size() == 0) {
             return "Ei käsiteltävää.";
         }
         try {
-            System.out.println("Hei!");
+            this.parser.resetNoteList();
             for (File f : midiList) {
                 this.parser.setMidiFile(f);
-                this.parser.parse(0);
+                this.parser.parse(transpose);
             }
             this.trie.insertFromNoteList(this.parser.getMIDINotes());
             return "MIDI ok.";
         } catch (Exception e) {
-            return "Midin parserointi epäonnistui";
+            return "Midin parserointi epäonnistui: " + e.getMessage();
         }
     }
     

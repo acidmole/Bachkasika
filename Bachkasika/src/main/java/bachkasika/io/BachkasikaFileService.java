@@ -23,8 +23,8 @@ public class BachkasikaFileService {
     
     private final File filePath;
 
-    public BachkasikaFileService() {
-        this.filePath = new File("midis/");
+    public BachkasikaFileService(String path) {
+        this.filePath = new File(path);
     }
     
     public List<File> getFileList() {
