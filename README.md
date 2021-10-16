@@ -24,4 +24,5 @@ Raportti tästä löytyy hakemistosta _target/site/checkstyle.html_
 * [Viikkoraportti 3](https://github.com/acidmole/Bachkasika/blob/master/dokumentit/Viikkoraportti3.md)
 * [Viikkoraportti 4](https://github.com/acidmole/Bachkasika/blob/master/dokumentit/Viikkoraportti4.md)
 * [Viikkoraportti 5](https://github.com/acidmole/Bachkasika/blob/master/dokumentit/Viikkoraportti5.md)
+* [Viikkoraportti 6](https://github.com/acidmole/Bachkasika/blob/master/dokumentit/Viikkoraportti6.md)
 
