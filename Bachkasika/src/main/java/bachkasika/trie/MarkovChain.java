@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- *
+ * Tämä luokka vastaa Markovin ketjujen luomisesta. Sille annetaan luodessa
+ * parametriksi Trie-olio, jonka pohjalta ketju luodaan.
+ * 
  * @author hede
  */
 public class MarkovChain {

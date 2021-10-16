@@ -41,6 +41,15 @@ public class BachkasikaService {
         }
     }
     
+    /**
+     * Tämä luokka ottaa tarjoaa käyttöliittymälle rajapinnan
+     * ja käsittelee tarjotun tiedostolistan sisältämät MIDI:t syöttämällä ne
+     * MIDI-parseriin ja tästä eteenpäin Triehen.
+     * 
+     * @param midiList File-lista käsiteltävistä mideistä
+     * @param transpose montako askelta transponoidaan
+     * @return String-olio käyttöliittymälle onnistuiko käsittely
+     */
     public String createMarkovChain(List<File> midiList, int transpose) {
         if (midiList == null || midiList.size() == 0) {
             return "Ei käsiteltävää.";

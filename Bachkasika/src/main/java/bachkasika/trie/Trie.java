@@ -26,7 +26,9 @@ public class Trie {
     
     
     /**
-     *
+     * Luo kaksi Trie-oliota. Toinen sisältää nuottien korkeudet ja toinen
+     * nuottien pituudet. Ensimmäisen voi syöttää Markovin ketjuun jälkimmäiseen.
+     * 
      * @param chainLength luotavien puun juurien pituus
      */
     public Trie(int chainLength, int bassNoteBoundary) {

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Tämä luokka vastaa kehikko-Trien luomises, johon nuotit asetetaan
+ * Tämä luokka vastaa kehikko-Trien luomisesta, johon nuotit asetetaan
  * 
  * EI TOIMI VIELÄ
  *
@@ -16,7 +16,7 @@ import java.util.Random;
  */
 public class FrameNode {
     
-    private FrameNode bassChild;
+    private FrameNode bassChild; 
     private FrameNode trebleChild;
     private ArrayList<Long> durationList;
     private ArrayList<Long> delayList;
