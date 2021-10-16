@@ -10,7 +10,7 @@ Koodattu graafinen käyttöliittymä, jonka jälkeen refaktoroitiin service-, fi
 Ei juurikaan oppimista tällä viikolla.
 
 ## Epäselvyydet ja vaikeudet
-Rakenne kaipaisi yhä edelleen refaktorointia, joka täytyy todennäköisesti jättää ihan viimeiseen viikkoon ennen loppupalautusta.
+Rakenne kaipaisi yhä edelleen refaktorointia, joka täytyy todennäköisesti jättää ihan viimeiseen viikkoon ennen loppupalautusta. Toteutus- ja testausdokumentaatio eivät ole edenneet ohjelman keskeneräisyyden vuoksi.
 
 ## Seuraavaksi
 Nuottien kesto -trien finalisointi ja MIDI:n rakentaja. Lopuksi refaktorointi.
