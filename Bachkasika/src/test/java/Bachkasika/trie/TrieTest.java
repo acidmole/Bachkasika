@@ -40,22 +40,40 @@ public class TrieTest {
         try {
             bsFileService = new BachkasikaFileService("midis/");
             this.fileList = bsFileService.getFileList();
-            testParser = new MIDIParser(bsFileService.getFileList().get(0));
+            testParser = new MIDIParser();
         } catch (Exception e) {
             System.out.println("Virhe MIDI:ssä");
         }
-        trie = new Trie(8);
+        trie = new Trie(8, 50);
     }
     
     @Test
     public void trieBuildsSequencesRight() {
-        trie.insertFromNoteList(testSheet);
+        try {
+            this.testParser.resetNoteList();
+            for (File f : this.fileList) {
+                this.testParser.setMidiFile(f);
+                this.testParser.parse(0);
+            }
+            this.trie.insertFromNoteList(this.testParser.getMIDINotes());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         assertTrue(trie.getRoot().toString().length() > 500);
     }
     
     @Test
     public void randomSequenceIsNotEmpty() {
-        trie.insertFromNoteList(testSheet);
+        try {
+            this.testParser.resetNoteList();
+            for (File f : this.fileList) {
+                this.testParser.setMidiFile(f);
+                this.testParser.parse(0);
+            }
+            this.trie.insertFromNoteList(this.testParser.getMIDINotes());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         int[] randomSeq = trie.getRandomSequence();
         int[] randomSeq2 = trie.getRandomSequence();
         assertTrue(randomSeq[5] > 0); 

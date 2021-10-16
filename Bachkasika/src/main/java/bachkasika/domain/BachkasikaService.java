@@ -31,37 +31,18 @@ public class BachkasikaService {
     public BachkasikaService() {
         
         try {
-            BachkasikaFileService bsFileService = new BachkasikaFileService("midis/");
-            this.fileList = bsFileService.getFileList();
-            parser = new MIDIParser();
+            this.bsFileService = new BachkasikaFileService("midis/");
+            this.fileList = this.bsFileService.getFileList();
+            this.parser = new MIDIParser();
             this.trie = new Trie(5, 50);
             this.chain = new MarkovChain(trie);
         } catch (Exception e) {
             System.out.println("I/O-poikkeus tiedostonkäsittelyssä.");
         }
-            /*
-            long start = System.currentTimeMillis();
-            BachkasikaFileService bsFileService = new BachkasikaFileService("bwv539.mid");
-            MIDIParser parser = new MIDIParser(bsFileService.getMidiFile());
-            parser.parse(0);
-            ArrayList<Note> sheet = parser.getMIDINotes();
-            bsFileService.addNewFile("bwv588.mid");
-            parser.setMidiFile(bsFileService.getMidiFile());
-            parser.parse(0);
-            ArrayList<Note> sheet2 = parser.getMIDINotes();
-            long end = System.currentTimeMillis();
-            Trie trie = new Trie(5);
-            trie.insertFromNoteList(sheet);
-            trie.insertFromNoteList(sheet2);
-            MarkovChain mc = new MarkovChain(trie);
-            System.out.println(Arrays.toString(mc.createChain(30)));
-            
-            System.out.println("Käytin aikaa " + (end - start) / 1000.0 + " sekuntia.");
-            */
     }
     
     public String createMarkovChain(List<File> midiList, int transpose) {
-        if (midiList.size() == 0) {
+        if (midiList == null || midiList.size() == 0) {
             return "Ei käsiteltävää.";
         }
         try {

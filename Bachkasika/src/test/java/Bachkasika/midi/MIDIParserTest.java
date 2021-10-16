@@ -34,15 +34,18 @@ public class MIDIParserTest {
     @Before
     public void setUp() {
         try {
-            bsFileService = new BachkasikaFileService("test/");
+            bsFileService = new BachkasikaFileService("src/test/midis");
             this.fileList = bsFileService.getFileList();
-            testParser = new MIDIParser(bsFileService.getFileList().get(0));
+            testParser = new MIDIParser();
         } catch (Exception e) {
         }
     }
     
     @Test
     public void parserParsesCorrectly() throws Exception {
+        System.out.println(fileList);
+        File f = this.fileList.get(0);
+        testParser.setMidiFile(f);
         ArrayList<Note> testNotes = testParser.parse(0);
         System.out.println(testNotes);
         assertEquals(testNotes.get(0).getKey(), 60);
@@ -50,11 +53,4 @@ public class MIDIParserTest {
         assertEquals(testNotes.get(2).getDuration(), 1920);
         
     }
-    
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
 }

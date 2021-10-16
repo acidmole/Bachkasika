@@ -90,7 +90,7 @@ public class TrieNode {
     
     /**
      * Arpoo satunnaisen solmun lapsista. Ei ole vielä painotettu.
-     * Arpoo arvojen 40 ja 99 välistä.
+     * Arpoo konstruktorin arvojen mukaisesti.
      * @return lapsen arvo children[] taulukossa
      */
     private int randomChild() {

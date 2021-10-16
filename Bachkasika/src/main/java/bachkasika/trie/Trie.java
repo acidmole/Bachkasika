@@ -6,7 +6,6 @@ package bachkasika.trie;
 
 import bachkasika.domain.Note;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 
@@ -34,7 +33,7 @@ public class Trie {
         
         this.chainLength = chainLength;
         this.root = new TrieNode();
-        this.frameRoot = new FrameNode(bassNoteBoundary);
+        this.frameRoot = new FrameNode(bassNoteBoundary, 0, 0, 0);
         this.noteList = new ArrayList<>();
         this.bassNoteBoundary = bassNoteBoundary;
     }
@@ -51,19 +50,15 @@ public class Trie {
         return this.trimAndInsertSequences(this.noteList);
     }
     
-    public ArrayList<Note> getFrame() {
-        for(int i = 0; i < this.noteList.size(); i++) {
-            
-        }
-        return this.noteList;
-    }
-    
+
     public void buildFrameTrie(ArrayList<Note> noteSequence) {
         for (int i = 0; i < noteSequence.size() - this.chainLength; i++) {
             FrameNode oldNode = this.frameRoot;
             for (int j = 0; j < this.chainLength; j++) {
                 Note n = noteSequence.get(i + j);
-                oldNode.addChild(n.getKey(), n.getDuration(), n.getDelay());
+                FrameNode newNode = new FrameNode(this.bassNoteBoundary, n.getKey(), n.getDuration(), n.getDelay());
+                oldNode.addChild(newNode);
+                oldNode = newNode;
             }
         }
     }
@@ -90,6 +85,7 @@ public class Trie {
     public int[] findAndFill(int[] sequence) {
         return this.root.findAndFillBranch(sequence);
     }
+    
     
     /**
      * Kokonaan uuden ketjun generointia toteuttava metodi.

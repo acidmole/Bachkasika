@@ -4,11 +4,13 @@
  */
 package bachkasika.trie;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Tämä luokka vastaa kehikko-Trien luomises, johon nuotit asetetaan
  * 
+ * EI TOIMI VIELÄ
  *
  * @author hede
  */
@@ -16,8 +18,8 @@ public class FrameNode {
     
     private FrameNode bassChild;
     private FrameNode trebleChild;
-    private HashMap<Long, Integer> durationMap;
-    private HashMap<Long, Integer> delayMap;
+    private ArrayList<Long> durationList;
+    private ArrayList<Long> delayList;
     private final int bassNoteBoundary;
     private boolean isBassNote;
     private int key;
@@ -29,11 +31,12 @@ public class FrameNode {
      * @param bassNoteBoundary tätä ylemmät lasketaan melodianuoteiksi
      */
     public FrameNode(int bassNoteBoundary, int key, long durationLength, long delayLength) {
-        this.durationMap = new HashMap<>();
-        this.delayMap = new HashMap<>();
+        this.durationList = new ArrayList<>();
+        this.delayList = new ArrayList<>();
         this.bassNoteBoundary = bassNoteBoundary;
-        this.addDurationLengthToMap(durationLength);
-        this.addDelayLengthToMap(delayLength);
+        
+        this.addDurationLengthToList(durationLength);
+        this.addDelayLengthToList(delayLength);
         this.key = key;
     }
     
@@ -60,23 +63,26 @@ public class FrameNode {
         return children;
     }
     
-    public void addDurationLengthToMap(long durationLength) {
-        this.durationMap.put(durationLength, this.durationMap.get(durationLength) + 1);
+    public void addDurationLengthToList(long durationLength) {
+        this.durationList.add(durationLength);
     }
     
-    public void addDelayLengthToMap(long delayLength) {
-        this.delayMap.put(delayLength, this.delayMap.get(delayLength) + 1);
-    }
-    
-    public HashMap<Long, Integer> getDurationMap() {
-        return this.getDurationMap();
-    }
-    
-    public HashMap<Long, Integer> getDelayMap() {
-        return this.getDelayMap();
+    public void addDelayLengthToList(long delayLength) {
+        this.delayList.add(delayLength);
     }
     
     public int getKey() {
         return this.key;
+    }
+    
+    public long getRandomDuration() {
+        
+        Random rn = new Random();
+        return this.durationList.get(rn.nextInt(this.durationList.size()));
+    }
+    
+    public long getRandomDelay() {
+        Random rn = new Random();
+        return this.delayList.get(rn.nextInt(this.durationList.size()));
     }
 }
