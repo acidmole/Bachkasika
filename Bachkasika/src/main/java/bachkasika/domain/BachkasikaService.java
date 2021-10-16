@@ -34,7 +34,7 @@ public class BachkasikaService {
             BachkasikaFileService bsFileService = new BachkasikaFileService("midis/");
             this.fileList = bsFileService.getFileList();
             parser = new MIDIParser();
-            this.trie = new Trie(5);
+            this.trie = new Trie(5, 50);
             this.chain = new MarkovChain(trie);
         } catch (Exception e) {
             System.out.println("I/O-poikkeus tiedostonkäsittelyssä.");

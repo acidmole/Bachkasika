@@ -20,18 +20,23 @@ public class Trie {
     
     private final int chainLength;
     private TrieNode root;
+    private FrameNode frameRoot;
     private int chains;
+    private ArrayList<Note> noteList;
+    private int bassNoteBoundary;
     
     
     /**
      *
      * @param chainLength luotavien puun juurien pituus
      */
-    public Trie(int chainLength) {
+    public Trie(int chainLength, int bassNoteBoundary) {
         
         this.chainLength = chainLength;
         this.root = new TrieNode();
-        
+        this.frameRoot = new FrameNode(bassNoteBoundary);
+        this.noteList = new ArrayList<>();
+        this.bassNoteBoundary = bassNoteBoundary;
     }
     
     /**
@@ -42,8 +47,25 @@ public class Trie {
      */
     public int[][] insertFromNoteList(ArrayList<Note> noteList) {
         
-        noteList = this.filterHighNotesFromList(noteList);
-        return this.trimAndInsertSequences(noteList);
+        this.noteList = this.filterHighNotesFromList(noteList);
+        return this.trimAndInsertSequences(this.noteList);
+    }
+    
+    public ArrayList<Note> getFrame() {
+        for(int i = 0; i < this.noteList.size(); i++) {
+            
+        }
+        return this.noteList;
+    }
+    
+    public void buildFrameTrie(ArrayList<Note> noteSequence) {
+        for (int i = 0; i < noteSequence.size() - this.chainLength; i++) {
+            FrameNode oldNode = this.frameRoot;
+            for (int j = 0; j < this.chainLength; j++) {
+                Note n = noteSequence.get(i + j);
+                oldNode.addChild(n.getKey(), n.getDuration(), n.getDelay());
+            }
+        }
     }
     
     
