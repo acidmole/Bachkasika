@@ -1,4 +1,4 @@
-# Viikkoraportti 5
+# Viikkoraportti 6
 
 ## Tehdyt asiat
 Kirjoitettu ohjelmaa eteenpäin. Vertaisarvioitu projektityö ja mietitty mahdollista apua omaan ohjelmaan.
