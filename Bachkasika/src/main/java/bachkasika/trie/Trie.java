@@ -35,7 +35,7 @@ public class Trie {
         
         this.chainLength = chainLength;
         this.root = new TrieNode();
-        this.frameRoot = new FrameNode(bassNoteBoundary, 0, 0, 0);
+        this.frameRoot = new FrameNode(bassNoteBoundary, 0, 0);
         this.noteList = new ArrayList<>();
         this.bassNoteBoundary = bassNoteBoundary;
     }
@@ -55,15 +55,15 @@ public class Trie {
 
     public void buildFrameTrie(ArrayList<Note> noteSequence) {
         for (int i = 0; i < noteSequence.size() - this.chainLength; i++) {
-            FrameNode oldNode = this.frameRoot;
-            for (int j = 0; j < this.chainLength; j++) {
+            FrameNode node = this.frameRoot;
+            for (int j = 0; j < this.chainLength - 1; j++) {
                 Note n = noteSequence.get(i + j);
-                FrameNode newNode = new FrameNode(this.bassNoteBoundary, n.getKey(), n.getDuration(), n.getDelay());
-                oldNode.addChild(newNode);
-                oldNode = newNode;
+                node = node.addChild(n.getKey(), n.getDuration(), n.getDelay());
             }
         }
     }
+    
+    
     
     
     /**
@@ -78,6 +78,7 @@ public class Trie {
         }
         return this.root.fillSequence(sequence.length - amount, sequence, this.root);
     }
+    
     
     /**
      * Metodi, joka etsii ja täydentää tyhjät kohdat (arvo <= 0) taulukossa.
