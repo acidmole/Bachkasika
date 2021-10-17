@@ -90,17 +90,22 @@ public class FrameNode {
         FrameNode child = new FrameNode(0,0,0);
         Note n = framedKeySequence.get(level);
         if (n.getKey() <= this.bassNoteBoundary) {
-            child = this.bassChild;
+            if (this.bassChild != null) {
+                child = this.bassChild;    
+            } else child = this.trebleChild;
         } else {
-            child = this.trebleChild;
+            if (this.trebleChild != null) {
+                child = this.trebleChild;
+            } else child = this.bassChild;
         }
+        
         if (n.getDuration() == 0) {
             long[] dd = child.getRandomDurationAndLength();
             n.setDuration(dd[0]);
             n.setDelay(dd[1]);
             framedKeySequence.add(level, n);
         }
-        return this.fitKeysToFrame(framedKeySequence, level + 1);
+        return child.fitKeysToFrame(framedKeySequence, level + 1);
     }
     
 

@@ -63,9 +63,13 @@ public class Trie {
         }
     }
     
-    
-    
-    
+    public ArrayList<Note> getFramedKeySequence(ArrayList<Note> noteList) {
+        
+        if (this.noteList.size() < this.chainLength) {
+            return noteList;
+        }
+        return this.frameRoot.fitKeysToFrame(noteList, 0);
+    }
     /**
      * Metodi, joka etsii rakenteesta jatkumon annetulle sekvenssille.
      * @param sequence annettu sekvenssi
