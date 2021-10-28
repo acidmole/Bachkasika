@@ -55,15 +55,20 @@ public class BachkasikaService {
             return "Ei käsiteltävää.";
         }
         try {
-            this.parser.resetNoteList();
             for (File f : midiList) {
+                this.parser.resetNoteList();
                 this.parser.setMidiFile(f);
                 this.parser.parse(transpose);
+                this.trie.insertFromNoteList(this.parser.getMIDINotes());
             }
-            this.trie.insertFromNoteList(this.parser.getMIDINotes());
+            ArrayList<Note> createdNoteList = chain.createNoteListFromKeyChain(chain.createKeyChain(60));
+            System.out.println(createdNoteList);
+            
             return "MIDI ok.";
         } catch (Exception e) {
+            e.printStackTrace();
             return "Midin parserointi epäonnistui: " + e.getMessage();
+            
         }
     }
     

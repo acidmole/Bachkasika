@@ -31,15 +31,8 @@ public class MarkovChain {
      * @return valmis nuottitaulukko
      */
     public ArrayList<Note> createNoteListFromKeyChain(int[] keyChain) {
-        for (int i = 0; i < keyChain.length - this.trie.getChainLength(); i++) {
-            ArrayList<Note> helperList = new ArrayList<>();
-            for (int j = 0; j < this.trie.getChainLength(); j++) {
-                helperList.add(this.noteList.get(i + j));
-            }
-            helperList = this.trie.getFramedKeySequence(this.noteList);
-            this.noteList.add(i + this.trie.getChainLength(), helperList.get(helperList.size() - 1));
-        }
-        return this.noteList;
+        
+        return this.trie.getFramedKeySequence(keyChain);
     }
     
     /**
@@ -60,7 +53,6 @@ public class MarkovChain {
             if (i >= 1) {
                 helperChain[i - 1] = firstNotes[i];
             }
-            this.trie.getFramedKeySequence(this.noteList);
         }
         for (int i = firstNotes.length; i < chain.length; i++) {
             helperChain = trie.findAndFill(helperChain);
@@ -75,9 +67,4 @@ public class MarkovChain {
         }
         return chain;
     }
-    
-    
-    
-    
-
 }

@@ -112,7 +112,9 @@ public class MIDIParser {
             }
             System.out.println();
         }
-        this.sortAndAdjustDelaysAndDurations();
+        this.sortAndTrimDurations();
+        this.filterHighNotesFromList();
+        this.trimDelays();
         return this.parsedMIDI;
     }
     
@@ -130,7 +132,7 @@ public class MIDIParser {
      * erityyppiset nuotinnukset.
      * @return Järjestetty ja pituudet sovitettu Note-oliotaulukko
      */
-    private ArrayList<Note> sortAndAdjustDelaysAndDurations() {
+    private ArrayList<Note> sortAndTrimDurations() {
         Collections.sort(this.parsedMIDI);
         ArrayDeque<Note> helperDeque = new ArrayDeque<>();
         long comparedTick = 0;
@@ -147,6 +149,48 @@ public class MIDIParser {
                 comparedTick = n.getTick();
             }
             helperDeque.add(n);
+        }
+        return this.parsedMIDI;
+    }
+     /**
+     * Metodi, jonka tehtävä on palauttaa minkä tahansa Note-olioita
+     * sisältävän listan samalla tickillä soivien nuottien korkein nuotti.
+     * 
+     * @param noteList Note-olion lista
+     * @return korkeimmat nuotit sisältävä lista. jos ei ole tarpeeksi
+     * elementtejä, palautetaan null
+     */
+   public ArrayList<Note> filterHighNotesFromList() {
+        ArrayList<Note> helperList = new ArrayList<>();
+        ArrayList<Note> finalList = new ArrayList<>();
+        long comparedTick = 0;
+        Iterator<Note> iter = this.parsedMIDI.iterator();
+        while (iter.hasNext()) {
+            Note n = iter.next();
+            if (n.getTick() > comparedTick) {
+                if (!helperList.isEmpty()) {
+                    Note highestNote = Collections.max(helperList);
+                    finalList.add(highestNote);
+                    helperList.clear();
+                }
+            }
+            helperList.add(n);
+            comparedTick = n.getTick();
+        }
+        Note highestNote = Collections.max(helperList);
+        finalList.add(highestNote);
+        this.parsedMIDI = finalList;
+        return this.parsedMIDI;
+    }
+    
+    public ArrayList<Note> trimDelays() {
+        Note prevNote = this.parsedMIDI.get(0);
+        for (int i = 1; i < this.parsedMIDI.size() - 1; i++) {
+            Note nextNote = this.parsedMIDI.get(i);
+            prevNote.setDelay(nextNote.getTick() - prevNote.getTick());
+            this.parsedMIDI.remove(i - 1);
+            this.parsedMIDI.add(i - 1, prevNote);
+            prevNote = nextNote;
         }
         return this.parsedMIDI;
     }

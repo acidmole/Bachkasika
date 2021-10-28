@@ -6,6 +6,7 @@ package bachkasika.trie;
 
 import bachkasika.domain.Note;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -20,8 +21,6 @@ public class FrameNode {
     private ArrayList<Long> durationList;
     private ArrayList<Long> delayList;
     private final int bassNoteBoundary;
-    private boolean isBassNote;
-    private int key;
     
     /**
      * Luokka, jonka tarkoitus on tuottaa erilaisia sävelten pituuksia
@@ -31,6 +30,8 @@ public class FrameNode {
      * Lapset jaetaan joko basso- tai melodianuoteiksi.
      * 
      * @param bassNoteBoundary tätä ylemmät lasketaan melodianuoteiksi
+     * @param durationLength nuotin soinnin kesto
+     * @param delayLength kuinka pitkään kuluu ennen kuin toinen nuotti alkaa soimaan
      */
     public FrameNode(int bassNoteBoundary, long durationLength, long delayLength) {
         this.durationList = new ArrayList<>();
@@ -72,6 +73,10 @@ public class FrameNode {
         }
     }
     
+    /**
+     * Metodi kertoo onko solmulla lapsia
+     * @return taulukko onko lapsia olemassa. 0 on basso, 1 on melodia.
+     */
     public boolean[] getChildren() {
         boolean[] children = new boolean[2];
         if(this.bassChild != null) {
@@ -83,33 +88,76 @@ public class FrameNode {
         return children;
     }
     
-    public ArrayList<Note> fitKeysToFrame(ArrayList<Note> framedKeySequence, int level) {
-        if (level > framedKeySequence.size() - 1) {
-            return framedKeySequence;
+    public ArrayList<Note> fitKeysToFrame(int[] keyChain, int chainLength) {
+        ArrayList<Note> noteList = this.initFrame(keyChain, chainLength);
+        ArrayList<Note> helperList = new ArrayList<>();
+        for (Note n : noteList) {
+            helperList.add(n);
         }
-        FrameNode child = new FrameNode(0,0,0);
-        Note n = framedKeySequence.get(level);
-        if (n.getKey() <= this.bassNoteBoundary) {
-            if (this.bassChild != null) {
-                child = this.bassChild;    
-            } else child = this.trebleChild;
-        } else {
-            if (this.trebleChild != null) {
-                child = this.trebleChild;
-            } else child = this.bassChild;
+        for (int i = chainLength; i < keyChain.length - chainLength; i++) {
+            FrameNode parentNode = this;
+            Note n = new Note(0, keyChain[i], 0, 0);
+            helperList.add(n);
+            Iterator<Note> iter = helperList.iterator();
+            while(iter.hasNext()) {
+                Note nextNote = iter.next();
+                if (nextNote.getKey() <= this.bassNoteBoundary && parentNode.bassChild != null) {
+                    parentNode = parentNode.bassChild;
+                } else if (nextNote.getKey() > this.bassNoteBoundary && parentNode.trebleChild != null) {
+                    parentNode = parentNode.trebleChild;
+                } else {
+                    parentNode = this;
+                }
+            }
+            long[] durAndDelay = parentNode.getRandomDurationAndDelay();
+            n.setDuration(durAndDelay[0]);
+            n.setDelay(durAndDelay[1]);
+            noteList.add(n);
+            helperList.remove(0);
         }
-        
-        if (n.getDuration() == 0) {
-            long[] dd = child.getRandomDurationAndLength();
-            n.setDuration(dd[0]);
-            n.setDelay(dd[1]);
-            framedKeySequence.add(level, n);
-        }
-        return child.fitKeysToFrame(framedKeySequence, level + 1);
+        return noteList;
     }
     
-
+    private ArrayList<Note> initFrame(int[] keyChain, int chainLength) {
+        int i = 0;
+        FrameNode parentNode = this;
+        ArrayList<Note> initializedNoteList = new ArrayList<>();
+        while (i < chainLength) {
+            Note n = new Note(0, keyChain[i], 0, 0);
+            if (keyChain[i] <= this.bassNoteBoundary && parentNode.bassChild != null) {
+                parentNode = parentNode.bassChild;
+                long[] dd = parentNode.getRandomDurationAndDelay();
+                n.setDuration(dd[0]);
+                n.setDelay(dd[1]);
+            } else if (keyChain[i] > this.bassNoteBoundary && parentNode.trebleChild != null) {
+                parentNode = parentNode.trebleChild;
+                long[] dd = parentNode.getRandomDurationAndDelay();
+                n.setDuration(dd[0]);
+                n.setDelay(dd[1]);
+            } else {
+                 parentNode = this;
+            }
+            initializedNoteList.add(n);
+            i++;
+        }
+        return initializedNoteList;
+    }
     
+    public ArrayList<Long> getDurationList() {
+        return this.durationList;
+    }
+    
+    public ArrayList<Long> getDelayList() {
+        return this.delayList;
+    }
+    
+    public FrameNode getBassChild() {
+        return this.bassChild;
+    }
+    
+    public FrameNode getTrebleChild() {
+        return this.trebleChild;
+    }
     
     public void addDurationLengthToList(long durationLength) {
         this.durationList.add(durationLength);
@@ -124,7 +172,7 @@ public class FrameNode {
      * 
      * @return indeksi 0 on kesto, indeksi 1 on viive
      */
-    public long[] getRandomDurationAndLength() {
+    public long[] getRandomDurationAndDelay() {
         long[] dd = new long[2];
         Random rn = new Random();
         int rndObj = rn.nextInt(this.delayList.size());

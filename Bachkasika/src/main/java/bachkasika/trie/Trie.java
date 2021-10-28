@@ -48,8 +48,8 @@ public class Trie {
      */
     public int[][] insertFromNoteList(ArrayList<Note> noteList) {
         
-        this.noteList = this.filterHighNotesFromList(noteList);
-        return this.trimAndInsertSequences(this.noteList);
+        this.buildFrameTrie(noteList);
+        return this.insertSequences(noteList);
     }
     
 
@@ -63,12 +63,8 @@ public class Trie {
         }
     }
     
-    public ArrayList<Note> getFramedKeySequence(ArrayList<Note> noteList) {
-        
-        if (this.noteList.size() < this.chainLength) {
-            return noteList;
-        }
-        return this.frameRoot.fitKeysToFrame(noteList, 0);
+    public ArrayList<Note> getFramedKeySequence(int[] keyChain) {        
+        return this.frameRoot.fitKeysToFrame(keyChain, this.chainLength);
     }
     /**
      * Metodi, joka etsii rakenteesta jatkumon annetulle sekvenssille.
@@ -104,43 +100,12 @@ public class Trie {
     }
     
     /**
-     * Metodi, jonka tehtävä on palauttaa minkä tahansa Note-olioita
-     * sisältävän listan samalla tickillä soivien nuottien korkein nuotti.
-     * 
-     * @param noteList Note-olion lista
-     * @return korkeimmat nuotit sisältävä lista. jos ei ole tarpeeksi
-     * elementtejä, palautetaan null
-     */
-    public ArrayList<Note> filterHighNotesFromList(ArrayList<Note> noteList) {
-        if (noteList.size() < this.chainLength) {
-            return null;
-        }
-        ArrayList<Note> helperList = new ArrayList<>();
-        ArrayList<Note> finalList = new ArrayList<>();
-        long comparedTick = 0;
-        Iterator<Note> iter = noteList.iterator();
-        while (iter.hasNext()) {
-            Note n = iter.next();
-            if (n.getTick() > comparedTick) {
-                Note highestNote = Collections.max(helperList);
-                finalList.add(highestNote);
-                helperList.clear();
-            }
-            helperList.add(n);
-            comparedTick = n.getTick();
-        }
-        Note highestNote = Collections.max(helperList);
-        finalList.add(highestNote);
-        return finalList;
-    }
-    
-    /**
      * Katkoo annetun listan chainLength*n -pituisiksi sekvensseiksi, jotka 
      * voidaan ajaa Triehen.
      * @param filteredNoteList vain yksittäisiä nuotteja kerrallaan sisältävä lista
      * @return sekvenssit sisältävä taulukko
      */
-    public int[][] trimAndInsertSequences(ArrayList<Note> filteredNoteList) {
+    public int[][] insertSequences(ArrayList<Note> filteredNoteList) {
         int[][] sequences = new int[this.chainLength * filteredNoteList.size() + 1][this.chainLength];
         for (int i = 0; i < (filteredNoteList.size() - this.chainLength); i++) {
             int[] readySequence = new int[this.chainLength];
