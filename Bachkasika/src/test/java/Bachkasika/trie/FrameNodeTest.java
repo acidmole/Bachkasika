@@ -86,7 +86,7 @@ public class FrameNodeTest {
             testList.add(n);
         }
         
-        testList = rootNode.fitKeysToFrame(testList, 0);
+        //testList = rootNode.fitKeysToFrame(testList, 0);
         
         
     }

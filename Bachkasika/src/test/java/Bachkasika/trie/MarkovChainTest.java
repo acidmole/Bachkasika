@@ -53,7 +53,7 @@ public class MarkovChainTest {
         
 
     }
-    
+    /*
     @Test
     public void markovChainBuildsSomething() {
         ArrayList<Note> notelist = testMarkov.createNoteListFromKeyChain(testMarkov.createKeyChain(80));
@@ -61,4 +61,5 @@ public class MarkovChainTest {
             System.out.println(n);
         }
     }
+    */
 }
