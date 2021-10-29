@@ -21,8 +21,6 @@ public class Trie {
     private TrieNode root;
     private FrameNode frameRoot;
     private int chains;
-    private ArrayList<Note> noteList;
-    private int bassNoteBoundary;
     
     
     /**
@@ -36,8 +34,6 @@ public class Trie {
         this.chainLength = chainLength;
         this.root = new TrieNode();
         this.frameRoot = new FrameNode(bassNoteBoundary, 0, 0);
-        this.noteList = new ArrayList<>();
-        this.bassNoteBoundary = bassNoteBoundary;
     }
     
     /**

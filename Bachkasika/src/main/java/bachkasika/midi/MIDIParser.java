@@ -12,11 +12,14 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MetaMessage;
 import javax.sound.midi.MidiEvent;
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.ShortMessage;
+import javax.sound.midi.SysexMessage;
 import javax.sound.midi.Track;
 
 /**
@@ -35,6 +38,7 @@ public class MIDIParser {
     
     private ArrayList<Note> parsedMIDI;
     private File midiFile;
+    private MIDIWriter writer;
     private final int NOTE_ON = 0x90;
     private final int NOTE_OFF = 0x80;
     
@@ -46,11 +50,13 @@ public class MIDIParser {
     public MIDIParser(File file) throws IOException {
         this.midiFile = file;
         this.parsedMIDI = new ArrayList<>();
+        this.writer = new MIDIWriter();
     }
 
     public MIDIParser() throws IOException {
         this.midiFile = null;
         this.parsedMIDI = new ArrayList<>();
+        this.writer = new MIDIWriter();
     }
 
     
@@ -195,9 +201,10 @@ public class MIDIParser {
         return this.parsedMIDI;
     }
     
-    public File writetoMIDI(ArrayList<Note> notes) {
+    public File writetoMIDI(ArrayList<Note> notes) throws InvalidMidiDataException, IOException {
+        
+        return this.writer.writeToMIDI(notes);
 
-        return null;
     }
     
     public ArrayList<Note> keysToSequence(int[] keys, int[] sequenceFrame) {

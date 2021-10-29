@@ -34,8 +34,7 @@ public class BachkasikaService {
             this.bsFileService = new BachkasikaFileService("midis/");
             this.fileList = this.bsFileService.getFileList();
             this.parser = new MIDIParser();
-            this.trie = new Trie(5, 50);
-            this.chain = new MarkovChain(trie);
+            this.chain = new MarkovChain(null);
         } catch (Exception e) {
             System.out.println("I/O-poikkeus tiedostonkäsittelyssä.");
         }
@@ -50,9 +49,13 @@ public class BachkasikaService {
      * @param transpose montako askelta transponoidaan
      * @return String-olio käyttöliittymälle onnistuiko käsittely
      */
-    public String createMarkovChain(List<File> midiList, int transpose) {
+    public String createMarkovChain(List<File> midiList, int transpose, int depth, int notes) {
         if (midiList == null || midiList.size() == 0) {
             return "Ei käsiteltävää.";
+        }
+        if (this.trie == null) {
+            System.out.println("Oli null");
+            this.createTrie(depth);
         }
         try {
             for (File f : midiList) {
@@ -61,18 +64,36 @@ public class BachkasikaService {
                 this.parser.parse(transpose);
                 this.trie.insertFromNoteList(this.parser.getMIDINotes());
             }
-            ArrayList<Note> createdNoteList = chain.createNoteListFromKeyChain(chain.createKeyChain(60));
+            this.chain.setTrie(this.trie);
+            ArrayList<Note> createdNoteList = chain.createNoteListFromKeyChain(chain.createKeyChain(20));
             System.out.println(createdNoteList);
-            
+            this.writeToFile(createdNoteList);
             return "MIDI ok.";
         } catch (Exception e) {
             e.printStackTrace();
             return "Midin parserointi epäonnistui: " + e.getMessage();
-            
         }
     }
     
+    public String writeToFile(ArrayList<Note> noteList) {
+        try {
+            this.parser.writetoMIDI(noteList);
+            return "Tiedoston kirjoitus onnistui.";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Tiedoston kirjoitus epäonnistui.";
+        }
+    }
+    
+    public String createTrie(int depth) {
+        this.trie = new Trie(depth, 59);
+        return "Trie created";
+    }
+    
     public int getChains() {
+        if (this.trie == null) {
+            return 0;
+        }
         return this.trie.getChains();
     }
     

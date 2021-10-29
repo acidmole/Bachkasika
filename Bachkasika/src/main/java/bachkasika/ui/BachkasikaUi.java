@@ -9,6 +9,8 @@ import bachkasika.domain.BachkasikaService;
 import java.io.File;
 import java.util.List;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
@@ -36,13 +39,14 @@ public class BachkasikaUi extends Application {
     
     private BachkasikaService bsService;
     private int transpose;
+    private int depth;
 
     
     @Override
     public void init() throws Exception {
         bsService = new BachkasikaService();
         this.transpose = 0;
-        
+        this.depth = 1;
     }
 
     @Override
@@ -65,11 +69,30 @@ public class BachkasikaUi extends Application {
         prompt.setPrefSize(800, 200);
         prompt.setTextAlignment(TextAlignment.LEFT);
         prompt.setBorder(new Border(new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
-        
-        VBox midiBox = new VBox(midis);
+        Button incDepth = new Button("+");
+        Button decDepth = new Button("-");
+        Button createTrie = new Button("Rakenna Trie");
+        Label depthLabel = new Label("Syvyys: 1");
+        TextField insertNotes = new TextField("200");
+        Label notes = new Label("Tuotetaan nuotteja: 200");
+                
         HBox topBox = new HBox(20);
         HBox buttonBox = new HBox(20);
+        HBox depthBox = new HBox(20);
+        VBox notesBox = new VBox(20);
+        VBox paramBox = new VBox(20);
         
+        
+        notesBox.getChildren().add(notes);
+        notesBox.getChildren().add(insertNotes);
+        depthBox.getChildren().add(incDepth);
+        depthBox.getChildren().add(decDepth);
+        depthBox.getChildren().add(depthLabel);
+        paramBox.getChildren().add(runButton);
+        paramBox.getChildren().add(createTrie);
+        paramBox.getChildren().add(chains);
+        paramBox.getChildren().add(depthBox);
+        paramBox.getChildren().add(notesBox);
         buttonBox.getChildren().add(confirm);
         buttonBox.getChildren().add(reset);
         buttonBox.getChildren().add(incTranspose);
@@ -77,12 +100,14 @@ public class BachkasikaUi extends Application {
         buttonBox.getChildren().add(transposeLabel);
         topBox.getChildren().add(midis);
         topBox.getChildren().add(selectedMidis);
-        topBox.getChildren().add(runButton);
-        topBox.getChildren().add(chains);
-        
+        topBox.getChildren().add(paramBox);
         runButton.setOnAction(event -> {
-            prompt.setText(prompt.getText() + "\nParseroidaan ja syötetään MIDI:t, transpoosi " + this.transpose + " sävelaskelta.\n" 
-            + this.bsService.createMarkovChain(selectedMidis.getItems(), this.transpose));
+            
+            prompt.setText(prompt.getText() + "\nParseroidaan ja syötetään MIDI:t, transpoosi " 
+                    + this.transpose + " sävelaskelta.\n" + 
+                    this.bsService.createMarkovChain(selectedMidis.getItems(), 
+                            this.transpose, this.depth, 
+                            Integer.valueOf(notes.getText().substring(20))));
             chains.setText("Triessä ketjuja: " + this.bsService.getChains());
         });
 
@@ -98,6 +123,10 @@ public class BachkasikaUi extends Application {
             selectedMidis.getItems().clear();
         });
         
+        createTrie.setOnAction(event -> { 
+            prompt.setText(prompt.getText() + "\n" + this.bsService.createTrie(this.depth));
+        });
+        
         incTranspose.setOnAction(event -> {
             this.transpose++;
             transposeLabel.setText("Transponoidaan " + this.transpose + " sävelaskelta");
@@ -108,6 +137,27 @@ public class BachkasikaUi extends Application {
             transposeLabel.setText("Transponoidaan " + this.transpose + " sävelaskelta");
         });
         
+        incDepth.setOnAction(event -> {
+            this.depth++;
+            depthLabel.setText("Syvyys: " + this.depth);
+        });
+
+        decDepth.setOnAction(event -> {
+            if (this.depth > 1) {
+                this.depth--;
+                depthLabel.setText("Syvyys: " + this.depth);
+            }
+        });
+        
+        insertNotes.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> change, 
+                    String oldValue, String newValue) {
+                if(newValue.matches("[0-9]*")) {
+                    notes.setText("Nuotteja: " + newValue);
+                }
+            }
+        });
         
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(topBox);
