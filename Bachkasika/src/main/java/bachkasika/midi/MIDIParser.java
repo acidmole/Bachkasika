@@ -183,13 +183,18 @@ public class MIDIParser {
             helperList.add(n);
             comparedTick = n.getTick();
         }
-        Note highestNote = Collections.max(helperList);
-        finalList.add(highestNote);
+        if (!helperList.isEmpty()) {
+            Note highestNote = Collections.max(helperList);
+            finalList.add(highestNote);
+        }
         this.parsedMIDI = finalList;
         return this.parsedMIDI;
     }
     
     public ArrayList<Note> trimDelays() {
+        if (this.parsedMIDI.isEmpty()) {
+            return new ArrayList<Note>();
+        }
         Note prevNote = this.parsedMIDI.get(0);
         for (int i = 1; i < this.parsedMIDI.size() - 1; i++) {
             Note nextNote = this.parsedMIDI.get(i);

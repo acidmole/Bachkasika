@@ -1,7 +1,5 @@
 package bachkasika.trie;
 
-import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -15,15 +13,18 @@ public class TrieNode {
     private int[] childFrequence;
     private final int randomStarts;
     private final int randomStops;
+    private int numberOfChildren;
     
     public TrieNode() {
         this.children = new TrieNode[128];
         this.childFrequence = new int[128];
-        this.randomStarts = 40;
+        this.randomStarts = 30;
         this.randomStops = 99;
+        this.numberOfChildren = 0;
     }
     
     public TrieNode(int randomStarts, int randomStops) {
+        this.numberOfChildren = 0;
         this.children = new TrieNode[128];
         this.childFrequence = new int[128];
         this.randomStarts = randomStarts;
@@ -42,6 +43,7 @@ public class TrieNode {
             if (this.children[sequence[level]] == null) {
                 this.children[sequence[level]] = new TrieNode();
             }
+            this.numberOfChildren ++;
             this.children[sequence[level]].addChildren(sequence, level + 1);
         }
     }
@@ -58,8 +60,14 @@ public class TrieNode {
         if (depth == sequence.length) {
             return sequence;
         }
-        int nextChild = node.randomChild();
+        int nextChild;
+        while (true) {
+            nextChild = node.randomChild();
+            if (node.children != null)
+                break;
+        }
         sequence[depth] = nextChild;
+        
         return node.children[nextChild].fillSequence(depth + 1, sequence, node);
     }
     
@@ -89,19 +97,19 @@ public class TrieNode {
     
     
     /**
-     * Arpoo satunnaisen solmun lapsista. Ei ole vielä painotettu.
+     * Arpoo satunnaisen solmun lapsista. Arvonta painotettu yleisimpiin lapsiin.
      * Arpoo konstruktorin arvojen mukaisesti.
      * @return lapsen arvo children[] taulukossa
      */
     private int randomChild() {
         Random rn = new Random();
-        int child;
-        while (true) {
-            child = this.randomStarts + rn.nextInt(this.randomStops + 1 - this.randomStarts);
-            if (this.children[child] != null) {
-                return child;
-            }
+        int child = rn.nextInt(this.numberOfChildren);
+        int i = this.randomStarts;
+        while (child >= 0 && i < this.randomStops) {
+            child = child - this.childFrequence[i];
+            i++;
         }
+        return i - 1;
     }
     
     @Override

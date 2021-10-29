@@ -65,7 +65,7 @@ public class BachkasikaService {
                 this.trie.insertFromNoteList(this.parser.getMIDINotes());
             }
             this.chain.setTrie(this.trie);
-            ArrayList<Note> createdNoteList = chain.createNoteListFromKeyChain(chain.createKeyChain(20));
+            ArrayList<Note> createdNoteList = chain.createNoteListFromKeyChain(chain.createKeyChain(notes));
             System.out.println(createdNoteList);
             this.writeToFile(createdNoteList);
             return "MIDI ok.";

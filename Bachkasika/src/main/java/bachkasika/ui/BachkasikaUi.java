@@ -74,7 +74,7 @@ public class BachkasikaUi extends Application {
         Button createTrie = new Button("Rakenna Trie");
         Label depthLabel = new Label("Syvyys: 1");
         TextField insertNotes = new TextField("200");
-        Label notes = new Label("Tuotetaan nuotteja: 200");
+        Label notes = new Label("Nuotteja: 200");
                 
         HBox topBox = new HBox(20);
         HBox buttonBox = new HBox(20);
@@ -107,7 +107,7 @@ public class BachkasikaUi extends Application {
                     + this.transpose + " sävelaskelta.\n" + 
                     this.bsService.createMarkovChain(selectedMidis.getItems(), 
                             this.transpose, this.depth, 
-                            Integer.valueOf(notes.getText().substring(20))));
+                            Integer.valueOf(notes.getText().substring(10))));
             chains.setText("Triessä ketjuja: " + this.bsService.getChains());
         });
 
