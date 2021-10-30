@@ -47,7 +47,7 @@ public class BachkasikaUi extends Application {
     public void init() throws Exception {
         bsService = new BachkasikaService("midis/");
         this.transpose = 0;
-        this.depth = 1;
+        this.depth = 3;
     }
 
     @Override
@@ -73,7 +73,7 @@ public class BachkasikaUi extends Application {
         Button incDepth = new Button("+");
         Button decDepth = new Button("-");
         Button createTrie = new Button("Rakenna Trie");
-        Label depthLabel = new Label("Syvyys: 1");
+        Label depthLabel = new Label("Syvyys: 3");
         TextField insertNotes = new TextField("200");
         Label notes = new Label("Nuotteja: 200");
                 

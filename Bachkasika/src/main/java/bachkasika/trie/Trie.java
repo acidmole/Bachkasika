@@ -37,10 +37,10 @@ public class Trie {
     }
     
     /**
-     * Tämä luokka tekee chainLengthin pituisia sävelkulkuja, jotka talletetaan
-     * Triehen.
+     * Metodin tehtävänä on rakentaa molemmat triet chainLength-pituisina
+     * sävelkulkuina.
      * 
-     * @param noteList sävelkorkeudet Note-olioina
+     * @param noteList sävelkorkeudet Note-olioiden listana
      */
     public int[][] insertFromNoteList(ArrayList<Note> noteList) {
         

@@ -118,7 +118,6 @@ public class MIDIParser {
                     }
                 }
             }
-            System.out.println();
         }
         this.sortAndTrimDurations();
         this.filterHighNotesFromList();
@@ -175,12 +174,10 @@ public class MIDIParser {
         Iterator<Note> iter = this.parsedMIDI.iterator();
         while (iter.hasNext()) {
             Note n = iter.next();
-            if (n.getTick() > comparedTick) {
-                if (!helperList.isEmpty()) {
-                    Note highestNote = Collections.max(helperList);
-                    finalList.add(highestNote);
-                    helperList.clear();
-                }
+            if (n.getTick() > comparedTick && !helperList.isEmpty()) {
+                Note highestNote = Collections.max(helperList);
+                finalList.add(highestNote);
+                helperList.clear();
             }
             helperList.add(n);
             comparedTick = n.getTick();
@@ -204,13 +201,14 @@ public class MIDIParser {
             return new ArrayList<Note>();
         }
         Note prevNote = this.parsedMIDI.get(0);
+        ArrayList<Note> helperList = new ArrayList<>();
         for (int i = 1; i < this.parsedMIDI.size() - 1; i++) {
             Note nextNote = this.parsedMIDI.get(i);
             prevNote.setDelay(nextNote.getTick() - prevNote.getTick());
-            this.parsedMIDI.remove(i - 1);
-            this.parsedMIDI.add(i - 1, prevNote);
+            helperList.add(prevNote);
             prevNote = nextNote;
         }
+        this.parsedMIDI = helperList;
         return this.parsedMIDI;
     }
     
