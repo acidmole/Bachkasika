@@ -25,8 +25,8 @@ public class MarkovChain {
     }
     
     /**
-     * Muokkaa sävelkorkeustaulukkoa listaksi, johon Triessä voidaan syöttää 
-     * nuottien kestot ja viipeet.
+     * Muokkaa sävelkorkeustaulukkoa Note-olioiden listaksi, johon Triessä 
+     * voidaan syöttää nuottien kestot.
      * @param keyChain sävelkorkeustaulukko
      * @return valmis nuottitaulukko
      */
@@ -44,7 +44,7 @@ public class MarkovChain {
     
     /**
      * Metodi rakentaa sävelkorkeuksista Markovin ketjun. Ei sisällä nuottien
-     * pituuksia, ainoastaan järjestyksen.
+     * pituuksia, ainoastaan järjestyksen ja sävelten korkeuden.
      * @param notes nuottien määrä
      * @return nuottien korkeudet taulukossa
      */

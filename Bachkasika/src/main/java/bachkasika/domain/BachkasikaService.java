@@ -28,6 +28,12 @@ public class BachkasikaService {
     private Trie trie;
     private MarkovChain chain;
     
+    /**
+     * Tämä luokka tarjoaa käyttöliittymälle rajapinnan MIDI:n käsittelyyn,
+     * Trien luomiseen ja Markovin ketjujen rakentamiseen.
+     * 
+     * @param pathName midien sijainti hakemistossa
+     */
     public BachkasikaService(String pathName) {
         
         try {
@@ -42,12 +48,13 @@ public class BachkasikaService {
     }
     
     /**
-     * Tämä luokka ottaa tarjoaa käyttöliittymälle rajapinnan
-     * ja käsittelee tarjotun tiedostolistan sisältämät MIDI:t syöttämällä ne
-     * MIDI-parseriin ja tästä eteenpäin Triehen.
+     * Ottaa vastaan käsiteltävät tiedostot, vie ne parseroitavaksi,
+     * syöttää triehen ja rakentaa ketjun.
      * 
      * @param midiList File-lista käsiteltävistä mideistä
      * @param transpose montako askelta transponoidaan
+     * @param depth monennenko asteen Markov tehdään
+     * @param notes luotavien MIDI-nuottien määrä
      * @return String-olio käyttöliittymälle onnistuiko käsittely
      */
     public String createMarkovChain(List<File> midiList, int transpose, int depth, int notes) {
@@ -67,14 +74,18 @@ public class BachkasikaService {
             this.chain.setTrie(this.trie);
             ArrayList<Note> createdNoteList = chain.createNoteListFromKeyChain(chain.createKeyChain(notes));
             System.out.println(createdNoteList);
-            this.writeToFile(createdNoteList);
-            return "MIDI ok.";
+            String success = this.writeToFile(createdNoteList);
+            return "MIDI ok.\n" + success;
         } catch (Exception e) {
-            e.printStackTrace();
             return "Midin parserointi epäonnistui: " + e.getMessage();
         }
     }
     
+    /**
+     * Vie valmiin nuottilistan MIDI:n kirjoitusta varten.
+     * @param noteList nuottilista
+     * @return viesti käyttöliittymälle onnistuiko kirjoittaminen
+     */
     public String writeToFile(ArrayList<Note> noteList) {
         try {
             this.parser.writetoMIDI(noteList);

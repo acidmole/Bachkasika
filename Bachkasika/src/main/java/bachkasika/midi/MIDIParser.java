@@ -13,13 +13,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import javax.sound.midi.InvalidMidiDataException;
-import javax.sound.midi.MetaMessage;
 import javax.sound.midi.MidiEvent;
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.ShortMessage;
-import javax.sound.midi.SysexMessage;
 import javax.sound.midi.Track;
 
 /**
@@ -191,6 +189,12 @@ public class MIDIParser {
         return this.parsedMIDI;
     }
     
+   /**
+    * Asettaa Note-olion delay-parametrin oikean kokoiseksi nuottilistassa eli
+    * katsoo milloin seuraava nuotti alkaa soimaan. Tämä voi olla lyhyempi kuin
+    * nuotin kesto.
+    * @return trimmattu lista
+    */
     public ArrayList<Note> trimDelays() {
         if (this.parsedMIDI.isEmpty()) {
             return new ArrayList<Note>();
@@ -207,17 +211,14 @@ public class MIDIParser {
     }
     
     public File writetoMIDI(ArrayList<Note> notes) throws InvalidMidiDataException, IOException {
-        
         return this.writer.writeToMIDI(notes);
-
     }
-    
-    public ArrayList<Note> keysToSequence(int[] keys, int[] sequenceFrame) {
  
+    /*
+    public ArrayList<Note> keysToSequence(int[] keys, int[] sequenceFrame) {
         ArrayList<Note> notes = new ArrayList<>();
-        
         return notes;
     }
-    
+    */
     
 }

@@ -30,7 +30,7 @@ public class Note implements Comparable<Note> {
     /**
      *
      * @param anotherNote vertailtava nuotti
-     * @return palauttaa 0, jos nuotti on sama, muuten -1
+     * @return true jos täysin sama, muuten false
      */
     public boolean equals(Note anotherNote) {
         if (this.key == anotherNote.getKey()) {
