@@ -11,8 +11,10 @@ import java.util.Arrays;
 /**
  * @author hede
  * 
- * Luokka tallentaa chainLength-muuttujan pituisia sävelketjuja. Viitteet
- * tallennetaan @see TrieNode olioina.
+ * Luokka tallentaa chainLength-muuttujan pituisia sävelketjuja sekä 
+ * nuottirakenteita.
+ * @see TrieNode 
+ * @see FrameNode
  */
 public class Trie {
     
