@@ -28,14 +28,15 @@ public class BachkasikaService {
     private Trie trie;
     private MarkovChain chain;
     
-    public BachkasikaService() {
+    public BachkasikaService(String pathName) {
         
         try {
-            this.bsFileService = new BachkasikaFileService("midis/");
+            this.bsFileService = new BachkasikaFileService(pathName);
             this.fileList = this.bsFileService.getFileList();
             this.parser = new MIDIParser();
             this.chain = new MarkovChain(null);
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("I/O-poikkeus tiedostonkäsittelyssä.");
         }
     }
@@ -102,6 +103,14 @@ public class BachkasikaService {
     
     public List<File> getFileList() {
         return this.fileList;
+    }
+    
+    public void setTrie(Trie trie) {
+        this.trie = trie;
+    }
+
+    public Trie getTrie() {
+        return this.trie;
     }
     
 }

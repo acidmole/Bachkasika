@@ -5,12 +5,7 @@
 package Bachkasika.domain;
 
 import bachkasika.domain.BachkasikaService;
-import bachkasika.io.BachkasikaFileService;
-import bachkasika.midi.MIDIParser;
-import bachkasika.trie.MarkovChain;
 import bachkasika.trie.Trie;
-import java.io.File;
-import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -25,26 +20,16 @@ import static org.junit.Assert.*;
 public class BachkasikaServiceTest {
     
     BachkasikaService bssTest;
-    BachkasikaFileService bsFileService;
-    List<File> fileList;
-    MIDIParser parser;
-    Trie trie;
-
     
     public BachkasikaServiceTest() {
     }
     
     @Before
     public void setUp() {
-        try {
-            bssTest = new BachkasikaService();
-            BachkasikaFileService bsFileService = new BachkasikaFileService("midis/");
-            fileList = bsFileService.getFileList();
-            parser = new MIDIParser();
-        } catch (Exception e) {
-            System.out.println("I/O-poikkeus tiedostonkäsittelyssä.");
-        }
+        bssTest = new BachkasikaService("midis/");
     }
+    
+    
     @Test
     public void emptyMIDIListIsNotAccepted() {
         assertEquals("Ei käsiteltävää.", bssTest.createMarkovChain(null, 0, 0, 0));
@@ -52,8 +37,17 @@ public class BachkasikaServiceTest {
     
     @Test
     public void nullTreeIsCreated() {
-        
-        assertFalse(trie == null);
+        Trie trie = null;
+        bssTest.setTrie(trie);
+        System.out.println(bssTest.getFileList());
+        bssTest.createMarkovChain(bssTest.getFileList(), 0, 2, 3);
+        assertNotNull(bssTest.getTrie());
+    }
+    
+    @Test
+    public void nullTreeReturnsZeroChains() {
+        Trie trie = null;
+        assertEquals(0, bssTest.getChains());
     }
     
     

@@ -44,7 +44,7 @@ public class BachkasikaUi extends Application {
     
     @Override
     public void init() throws Exception {
-        bsService = new BachkasikaService();
+        bsService = new BachkasikaService("midis/");
         this.transpose = 0;
         this.depth = 1;
     }

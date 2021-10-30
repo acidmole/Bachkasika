@@ -50,13 +50,13 @@ public class MIDIParser {
     public MIDIParser(File file) throws IOException {
         this.midiFile = file;
         this.parsedMIDI = new ArrayList<>();
-        this.writer = new MIDIWriter();
+        this.writer = new MIDIWriter("markoved_bach.mid");
     }
 
     public MIDIParser() throws IOException {
         this.midiFile = null;
         this.parsedMIDI = new ArrayList<>();
-        this.writer = new MIDIWriter();
+        this.writer = new MIDIWriter("markoved_bach.mid");
     }
 
     
