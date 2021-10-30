@@ -5,7 +5,6 @@
  */
 package bachkasika.io;
 
-import lombok.Data;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +17,6 @@ import java.util.List;
  * 
  * @author hede
  */
-@Data
 public class BachkasikaFileService {
     
     private final File filePath;
@@ -29,6 +27,10 @@ public class BachkasikaFileService {
     
     public List<File> getFileList() {
         return Arrays.asList(this.filePath.listFiles());
+    }
+    
+    public File getFilePath() {
+        return this.filePath;
     }
     
 }

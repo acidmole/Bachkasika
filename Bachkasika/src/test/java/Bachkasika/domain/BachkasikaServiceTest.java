@@ -41,20 +41,20 @@ public class BachkasikaServiceTest {
             BachkasikaFileService bsFileService = new BachkasikaFileService("midis/");
             fileList = bsFileService.getFileList();
             parser = new MIDIParser();
-            trie = new Trie(5, 50);
         } catch (Exception e) {
             System.out.println("I/O-poikkeus tiedostonkäsittelyssä.");
         }
     }
-    /*
     @Test
     public void emptyMIDIListIsNotAccepted() {
-        assertEquals("Ei käsiteltävää.", bssTest.createMarkovChain(null, 0));
+        assertEquals("Ei käsiteltävää.", bssTest.createMarkovChain(null, 0, 0, 0));
     }
     
     @Test
-    public void chainCreatorReturnsOk() {
-        assertEquals("MIDI ok.", bssTest.createMarkovChain(fileList, 0));
+    public void nullTreeIsCreated() {
+        
+        assertFalse(trie == null);
     }
-    */
+    
+    
 }

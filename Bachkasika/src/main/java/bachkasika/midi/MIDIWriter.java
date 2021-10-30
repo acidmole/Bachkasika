@@ -23,9 +23,10 @@ import javax.sound.midi.Track;
  * @author hede
  */
 public class MIDIWriter {
+    private File file;
     
-    public MIDIWriter() {
-        
+    public MIDIWriter(String fileName) {
+        this.file = new File(fileName);
     }
     
     public File writeToMIDI(ArrayList<Note> noteList) throws InvalidMidiDataException, IOException {
@@ -52,7 +53,7 @@ public class MIDIWriter {
 
 //****  set instrument to Piano  ****
 		mm = new ShortMessage();
-		mm.setMessage(0xC0, 0x11, 0x00);
+		mm.setMessage(0xC0, 0x13, 0x00);
 		me = new MidiEvent(mm,(long)0);
 		t.add(me);
 
@@ -76,8 +77,7 @@ public class MIDIWriter {
 		t.add(me);
 
 //****  write the MIDI sequence to a MIDI file  ****
-		File f = new File("markoved_bach.mid");
-		MidiSystem.write(s,1,f);               
+		MidiSystem.write(s,1,);               
         return f;
     }
     

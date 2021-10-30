@@ -54,7 +54,6 @@ public class BachkasikaService {
             return "Ei käsiteltävää.";
         }
         if (this.trie == null) {
-            System.out.println("Oli null");
             this.createTrie(depth);
         }
         try {
