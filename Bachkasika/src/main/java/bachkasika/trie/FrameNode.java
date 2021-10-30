@@ -27,7 +27,8 @@ public class FrameNode {
      * Trie-rakenteen muodossa. Ei tällä hetkellä ota huomioon tahdin 
      * päättymistä tai alkamista.
      * 
-     * Lapset jaetaan joko basso- tai melodianuoteiksi.
+     * Lapset jaetaan joko basso- tai melodianuoteiksi, sillä niillä on
+     * musiikissa omat tarkoituksensa.
      * 
      * @param bassNoteBoundary tätä ylemmät lasketaan melodianuoteiksi
      * @param durationLength nuotin soinnin kesto
@@ -88,6 +89,15 @@ public class FrameNode {
         return children;
     }
     
+    /**
+     * Asettaa pelkät sävelkorkeudet sisältävän Markov-ketjun pituudet
+     * sisältävään kehikkoon. 
+     * 
+     * @see initFrame
+     * @param keyChain sävelkorkeudet sisältävä taulukko
+     * @param chainLength kuinka pitkiä ketjuja tehdään
+     * @return valmis Note-oliot sisältävä, chainLength-pituinen nuottilista
+     */
     public ArrayList<Note> fitKeysToFrame(int[] keyChain, int chainLength) {
         ArrayList<Note> noteList = this.initFrame(keyChain, chainLength);
         ArrayList<Note> helperList = new ArrayList<>();
@@ -118,6 +128,15 @@ public class FrameNode {
         return noteList;
     }
     
+    /**
+     * Rakentaa kehikon lapsista sävelkorkeuksien mukaan, johon ne voidaan 
+     * myöhemmin asetella.
+     * 
+     * @see fitKeysToFrame
+       @param keyChain sävelkorkeudet sisältävä taulukko
+     * @param chainLength kuinka pitkiä ketjuja tehdään
+     * @return alustettu kehikko
+     */
     private ArrayList<Note> initFrame(int[] keyChain, int chainLength) {
         int i = 0;
         FrameNode parentNode = this;
@@ -170,7 +189,7 @@ public class FrameNode {
     /**
      * Arpoo solmusta jonkin nuotin duration- ja delay-arvot.
      * 
-     * @return indeksi 0 on kesto, indeksi 1 on viive
+     * @return arvotaulukko: indeksi 0 on kesto, indeksi 1 on viive
      */
     public long[] getRandomDurationAndDelay() {
         long[] dd = new long[2];

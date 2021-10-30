@@ -6,8 +6,6 @@ package bachkasika.trie;
 
 import bachkasika.domain.Note;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 
 /**
  * @author hede
@@ -25,7 +23,9 @@ public class Trie {
     
     /**
      * Luo kaksi Trie-oliota. Toinen sisältää nuottien korkeudet ja toinen
-     * nuottien pituudet. Ensimmäisen voi syöttää Markovin ketjuun jälkimmäiseen.
+     * nuottien pituudet ja seuraavan nuotin soimisajan. 
+     * Marklovin ketju rakennetaan syöttämällä ensimmäinen jälkimmäiseen.
+     * @see MarkovChain
      * 
      * @param chainLength luotavien puun juurien pituus
      */
@@ -48,7 +48,11 @@ public class Trie {
         return this.insertSequences(noteList);
     }
     
-
+    /**
+     * Rakentaa nuottien pituuksien ja seuraavan nuotin alkamisen määräävän
+     * kehikko-trien.
+     * @param noteSequence Lista, jonka mukaan trie rakennetaan.
+     */
     public void buildFrameTrie(ArrayList<Note> noteSequence) {
         for (int i = 0; i < noteSequence.size() - this.chainLength; i++) {
             FrameNode node = this.frameRoot;

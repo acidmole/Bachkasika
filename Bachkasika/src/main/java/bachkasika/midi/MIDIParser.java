@@ -41,8 +41,12 @@ public class MIDIParser {
     private final int NOTE_OFF = 0x80;
     
     /**
-     *
+     * Luokka vastaa MIDI:n käsittelystä. Se pilkkoo valmiin MIDI:n
+     * Note-olioista koostuvaksi listaksi. Se myös pystyy ohjaamaan listat
+     * uusiksi MIDI-tiedostoiksi MIDIWriter-luokan avulla.
+     * 
      * @param file parseroitava miditiedosto
+     * @see MIDIWriter
      * @throws Exception jos parseroinnissa tapahtuu virhe
      */
     public MIDIParser(File file) throws IOException {
@@ -213,12 +217,4 @@ public class MIDIParser {
     public File writetoMIDI(ArrayList<Note> notes) throws InvalidMidiDataException, IOException {
         return this.writer.writeToMIDI(notes);
     }
- 
-    /*
-    public ArrayList<Note> keysToSequence(int[] keys, int[] sequenceFrame) {
-        ArrayList<Note> notes = new ArrayList<>();
-        return notes;
-    }
-    */
-    
 }

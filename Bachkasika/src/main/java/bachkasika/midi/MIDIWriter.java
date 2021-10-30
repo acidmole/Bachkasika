@@ -18,9 +18,10 @@ import javax.sound.midi.SysexMessage;
 import javax.sound.midi.Track;
 
 /**
- * This class owes big shoutout to Karl Brown for his tiny Java program:
+ * Tehty Karl Brownin koodin mukaisesti:
  * http://www.automatic-pilot.com/midifile.html
- * @author hede
+ * 
+ * Kirjoittaa Note-oliolistan MIDI:ksi.
  */
 public class MIDIWriter {
     private File file;
@@ -39,26 +40,25 @@ public class MIDIWriter {
 	MidiEvent me = new MidiEvent(sm,(long)0);
 	t.add(me);
         
-        //****  set omni on  ****
+        //set omni on
         ShortMessage mm = new ShortMessage();
 	mm.setMessage(0xB0, 0x7D,0x00);
 	me = new MidiEvent(mm,(long)0);
 	t.add(me);
 
-//****  set poly on  ****
+        //set poly on
 	mm = new ShortMessage();
 	mm.setMessage(0xB0, 0x7F,0x00);
 	me = new MidiEvent(mm,(long)0);
 	t.add(me);
 
-//****  set instrument to Piano  ****
+        // set instrument to church organ
 	mm = new ShortMessage();
 	mm.setMessage(0xC0, 0x13, 0x00);
 	me = new MidiEvent(mm,(long)0);
 	t.add(me);
 
-// note on      
-
+        // note on and off
         for (Note n : noteList) {
             ShortMessage noteOn = new ShortMessage();
             noteOn.setMessage(0x90, n.getKey(),0x60);
@@ -69,15 +69,16 @@ public class MIDIWriter {
             MidiEvent me2 = new MidiEvent(noteOff, n.getTick() + n.getDuration() - 1);
             t.add(me2);
         }
-//****  set end of track (meta event) 19 ticks later  ****
-		MetaMessage mt = new MetaMessage();
-        byte[] bet = {}; // empty array
-		mt.setMessage(0x2F,bet,0);
-		me = new MidiEvent(mt, (long)140);
-		t.add(me);
 
-//****  write the MIDI sequence to a MIDI file  ****
-		MidiSystem.write(s,1,this.file);               
+        //set end of track (meta event) 19 ticks later
+        MetaMessage mt = new MetaMessage();
+        byte[] bet = {}; // empty array
+        mt.setMessage(0x2F,bet,0);
+	me = new MidiEvent(mt, (long)140);
+	t.add(me);
+
+        //write the MIDI sequence to a MIDI file  ****
+	MidiSystem.write(s,1,this.file);               
         return this.file;
     }
     
