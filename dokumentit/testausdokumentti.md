@@ -7,6 +7,7 @@ mvn test jacoco:report
 ```
 Tarkempi testiraportti löytyy hakemistosta _target/site/jacoco/index.html_
 Kuva testiraportin yhteenvedosta löytyy [tästä](https://github.com/acidmole/Bachkasika/blob/master/dokumentit/testauskattavuus.png)
+![](https://github.com/acidmole/Bachkasika/blob/master/dokumentit/testauskattavuus.png)
 
 ## Testauksen laatu
 Testausta on tehty itse generoidulla MIDI-tiedostolla. Käytännössä tällainen syöte on ainoa, jolla voi varmasti todeta ohjelman toimivan halutusti, mutta samalla saattaa piilottaa isompia ongelmia taakseen.
