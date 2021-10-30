@@ -6,6 +6,7 @@ package bachkasika.trie;
 
 import bachkasika.domain.Note;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @author hede
@@ -66,6 +67,7 @@ public class Trie {
     public ArrayList<Note> getFramedKeySequence(int[] keyChain) {        
         return this.frameRoot.fitKeysToFrame(keyChain, this.chainLength);
     }
+    
     /**
      * Metodi, joka etsii rakenteesta jatkumon annetulle sekvenssille.
      * @param sequence annettu sekvenssi

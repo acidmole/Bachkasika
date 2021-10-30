@@ -1,5 +1,6 @@
 package bachkasika.trie;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -63,12 +64,12 @@ public class TrieNode {
         int nextChild;
         while (true) {
             nextChild = node.randomChild();
-            if (node.children != null)
+            if (node.children[nextChild] != null)
                 break;
         }
         sequence[depth] = nextChild;
         
-        return node.children[nextChild].fillSequence(depth + 1, sequence, node);
+        return node.children[nextChild].fillSequence(depth + 1, sequence, node.children[nextChild]);
     }
     
     
@@ -87,9 +88,9 @@ public class TrieNode {
             return sequence;
         }
         int i = 0;
-        TrieNode nextChild = null;
-        while (i < sequence.length && sequence[i] > 0) {
-            nextChild = this.getChildren()[sequence[i]];
+        TrieNode nextChild = this;
+        while (nextChild.getChildren()[sequence[i]] != null && i > 0) {
+            nextChild = nextChild.getChildren()[sequence[i]];
             i++;
         }
         return (this.fillSequence(i, sequence, nextChild));

@@ -11,6 +11,7 @@ import bachkasika.trie.MarkovChain;
 import bachkasika.trie.Trie;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -28,8 +29,8 @@ public class BachkasikaPerformanceTest {
         MIDIWriter testWriter = new MIDIWriter("performancetest.mid");
         Random rnd = new Random();
         ArrayList<Note> randomNoteList = new ArrayList<>();
-        for (int i = 0; i < 300000; i++) {
-            Note n = new Note(i * 60, rnd.nextInt(50) + 35, 60, 60);
+        for (int i = 0; i < 100; i++) {
+            Note n = new Note(i * 60, rnd.nextInt(10) + 35, 60, 60);
             randomNoteList.add(n);
         }
         
@@ -57,17 +58,25 @@ public class BachkasikaPerformanceTest {
         System.out.println("MIDI:n parserointiin aikaa kului " + (stop - start) / 1000.0 + " sekuntia.");
         
         start = System.currentTimeMillis();
-        Trie trie = new Trie(8, 59);
+        Trie trie = new Trie(3, 59);
         trie.insertFromNoteList(randomNoteList);
         stop = System.currentTimeMillis();
         System.out.println("Trien rakentamiseen aikaa kului " + (stop - start) / 1000.0 + " sekuntia.");
 
         MarkovChain testMarkov = new MarkovChain(trie);
         start = System.currentTimeMillis();
-        testMarkov.createNoteListFromKeyChain(testMarkov.createKeyChain(randomNoteList.size()));
+        int[] markovArray = testMarkov.createKeyChain(randomNoteList.size());
+        ArrayList<Note> markov = testMarkov.createNoteListFromKeyChain(markovArray);
         stop = System.currentTimeMillis();
         System.out.println("Markovin ketjun rakentamiseen aikaa kului " + (stop - start) / 1000.0 + " sekuntia.");
         
+        System.out.println(Arrays.toString(markovArray));
+        int[] c = new int[randomNoteList.size()];
+        for (int i = 0; i< randomNoteList.size(); i++) {
+            c[i] = randomNoteList.get(i).getKey();
+        }
+        System.out.println(Arrays.toString(c));
+        System.out.println(Arrays.toString(trie.getRandomSequence()));
     }
     
     
