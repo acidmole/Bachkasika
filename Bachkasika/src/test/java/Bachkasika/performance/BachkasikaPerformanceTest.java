@@ -31,7 +31,7 @@ public class BachkasikaPerformanceTest {
         Random rnd = new Random();
         ArrayList<Note> randomNoteList = new ArrayList<>();
         for (int i = 0; i < 300000; i++) {
-            Note n = new Note(i * 60, rnd.nextInt(10) + 35, 60, 60);
+            Note n = new Note(i * 60, rnd.nextInt(50) + 35, 60, 60);
             randomNoteList.add(n);
         }
         

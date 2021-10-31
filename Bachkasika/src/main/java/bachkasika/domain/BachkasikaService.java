@@ -98,7 +98,7 @@ public class BachkasikaService {
     
     public String createTrie(int depth) {
         this.trie = new Trie(depth, 59);
-        return "Trie created";
+        return "Trie luotu.";
     }
     
     public int getChains() {
