@@ -37,3 +37,7 @@ Suorituskykytestissä arvottiin 4. asteen ketjuun 3 kertaa 1 000 000 ja 8. astee
 Keskimääräisessä MIDI-tiedostossa on tyypillisesti kertaluokkaa 10<sup>3</sup> nuottia, joten tällainen testi on suorituskyvyltään aivan yläpäästä, eikä sitä tilavaativuuden vuoksi merkittävästi pystytä tällaisenaan enää nostamaan.
 
 Suorituskykytestit vahvistavat toteutusdokumentissa olevia väittämiä, että ohjelman aikavaativuus on O(n\*m), jossa m on Markovin ketjun aste.
+
+## Oikeellisuustestit
+
+Ohjelman oikeellisuutta testattiin myös BachkasikaPerformanceTest-luokalla, jossa viisi kertaa arvottiin satunnainen ketju jo tuotetuista Markovin ketjuista. Tällainen ketju tulee löytyä alkuperäisestä nuottilistasta ja joka kerta ohjelma sellaisen löytää.
