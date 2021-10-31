@@ -33,3 +33,10 @@ Trien tilavaativuus on luokkaa 128<sup>m</sup>, sillä mahdollisia MIDI-säveli�
 Ohjelman musiikki ei täytä länsimaisen musiikin teoriaa. Musiikki pitäisi pystyä ajamaan jonkinlaiseen tahtilajiin ja jotta musiikkiin saisi lisää harmoniaa, sen tulisi pystyä erittelemään samaan aikaan soivat nuotit ja toistamaan niitä. Tällaisella rakenteella sellaisen toistaminen on hyvin hankalaa.
 
 Tällaisessa muodossaan ohjelmaa voisi kehittää vielä keräämään MIDI:stä myös alin soiva nuotti ja muodostaa nuottikehikkoa suuntaan, jossa kaksi nuottia joko soi tai ei soi samaan aikaan.
+
+## Lähteet
+* Aika- ja tilavaativuuksien pohjana on ollut Antti Laaksosen oppikirja Tietorakenteet ja algoritmit (2020).
+* Markovin ketjut on tehty Wikipedia-artikkelin pohjalta: Markov chain, Wikipedia, luettu 11.9, saatavilla: https://en.wikipedia.org/wiki/Markov_chain
+* Trie-rakenne myös Wikipediasta: https://en.wikipedia.org/wiki/Trie
+* MIDI:n parseroinnin pohjalla on ollut Sami Koivun materiaali: https://stackoverflow.com/questions/3850688/reading-midi-files-in-java#comment4093620_3850885
+* MIDI:n kirjoittamisen perustuu Karl Brownin koodiin: http://www.automatic-pilot.com/midifile.html
