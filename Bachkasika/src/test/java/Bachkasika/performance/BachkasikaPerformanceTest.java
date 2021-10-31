@@ -26,10 +26,11 @@ public class BachkasikaPerformanceTest {
      */
     public static void main(String[] args) {
         
+        int trieSize = 8;
         MIDIWriter testWriter = new MIDIWriter("performancetest.mid");
         Random rnd = new Random();
         ArrayList<Note> randomNoteList = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 300000; i++) {
             Note n = new Note(i * 60, rnd.nextInt(10) + 35, 60, 60);
             randomNoteList.add(n);
         }
@@ -58,7 +59,7 @@ public class BachkasikaPerformanceTest {
         System.out.println("MIDI:n parserointiin aikaa kului " + (stop - start) / 1000.0 + " sekuntia.");
         
         start = System.currentTimeMillis();
-        Trie trie = new Trie(3, 59);
+        Trie trie = new Trie(trieSize, 59);
         trie.insertFromNoteList(randomNoteList);
         stop = System.currentTimeMillis();
         System.out.println("Trien rakentamiseen aikaa kului " + (stop - start) / 1000.0 + " sekuntia.");
@@ -70,13 +71,27 @@ public class BachkasikaPerformanceTest {
         stop = System.currentTimeMillis();
         System.out.println("Markovin ketjun rakentamiseen aikaa kului " + (stop - start) / 1000.0 + " sekuntia.");
         
-        System.out.println(Arrays.toString(markovArray));
-        int[] c = new int[randomNoteList.size()];
-        for (int i = 0; i< randomNoteList.size(); i++) {
-            c[i] = randomNoteList.get(i).getKey();
+
+        for (int j = 0; j < 5; j++) {
+            int[] c = new int[trieSize];
+            int randomStart = rnd.nextInt(randomNoteList.size()) - trieSize;
+            for (int i = 0; i < trieSize; i++) {
+                c[i] = randomNoteList.get(i + randomStart).getKey();
+            }
+            int hits = 0;
+            for (int i = 0; i < randomNoteList.size(); i++) {
+                if (randomNoteList.get(i).getKey() == c[hits]) {
+                    hits ++;
+                    if (hits == 8) {
+                        System.out.println("Löytyi vastaava ketju!");
+                        break;
+                    }
+                } else {
+                    hits = 0;
+                }
+            }
         }
-        System.out.println(Arrays.toString(c));
-        System.out.println(Arrays.toString(trie.getRandomSequence()));
+        
     }
     
     
