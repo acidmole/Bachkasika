@@ -7,7 +7,7 @@ mvn compile exec:java -Dexec.mainClass=bachkasika.ui.BachkasikaUi
 ```
 Varmista, että olet samassa hakemistossa kuin _pom.xml_ eli _Bachkasika/Bachkasika_. 
 
-Ohjelmasta on tehty myös release, josta löydät valmiin jar:n ja muutama käyttökelpoinen MIDI-tiedosto syötteeksi. MIDI:en tulee olla _midis/_-hakemistossa.
+Ohjelmasta on tehty myös [release](https://github.com/acidmole/Bachkasika/releases/tag/1.0), josta löydät valmiin jar:n ja muutama käyttökelpoinen MIDI-tiedosto syötteeksi. MIDI:en tulee olla _midis/_-hakemistossa.
 
 ## Omat MIDI-syötteet
 Ohjelmassa voi myös käyttää omia MIDI-tiedostoja. Sijoita ne myös _midis/_-hakemistoon. Todennäköisesti rumpuraitoja sisältävät MIDI:t eivät toimi ohjelmassa. Tätä ei ole testattu.
